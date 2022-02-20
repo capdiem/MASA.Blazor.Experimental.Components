@@ -1,0 +1,30 @@
+﻿@namespace MASA.Blazor.Experimental.Components
+
+@ChildContent?.Invoke((HandleOnEnter, HandleOnSearchWithDelay))
+
+@code {
+
+    [Parameter]
+    public RenderFragment<(Func<KeyboardEventArgs, Task> onEnter, Func<Task> onSearch)> ChildContent { get; set; }
+    
+    [Parameter]
+    public EventCallback OnSearch { get; set; }
+
+    private async Task HandleOnEnter(KeyboardEventArgs args)
+    {
+        if (args.Code is "Enter" or "NumpadEnter")
+        {
+            await HandleOnSearchWithDelay();
+        }
+    }
+
+    private async Task HandleOnSearchWithDelay()
+    {
+        // TODO: shit code
+        // waiting value changed
+        await Task.Delay(333);
+
+        await OnSearch.InvokeAsync();
+    }
+
+}

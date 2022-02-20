@@ -1,0 +1,62 @@
+﻿@namespace MASA.Blazor.Experimental.Components
+
+<MRow Dense Align="AlignTypes.Center" Class="@Class" Style="@Style">
+    @foreach (var item in Items)
+    {
+        <MCol Cols="@Cols" Sm="@Sm" Md="@Md">
+            <dl class="d-flex align-items-center neutral-lighten-2--text">
+                <dt>@item.Key：</dt>
+                <dd>
+                    @if (ItemContent == null)
+                    {
+                        @item.Value
+                    }
+                    else
+                    {
+                        @ItemContent(item)
+                    }
+                </dd>
+            </dl>
+        </MCol>
+    }
+</MRow>
+
+@code
+{
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
+    public StringNumber Cols { get; set; }
+
+    [Parameter]
+    public RenderFragment<KeyValuePair<string, object>>? ItemContent { get; set; }
+
+    [Parameter]
+    public Dictionary<string, object>? Items { get; set; }
+
+    [Parameter]
+    public StringNumber Md { get; set; }
+
+    [Parameter]
+    public StringNumber Sm { get; set; }
+
+    [Parameter]
+    public string Style { get; set; }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Cols = 12;
+        Sm = 6;
+        Md = 4;
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        Items ??= new Dictionary<string, object>();
+    }
+}

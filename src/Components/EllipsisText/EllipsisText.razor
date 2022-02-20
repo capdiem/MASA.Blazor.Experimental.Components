@@ -1,0 +1,61 @@
+﻿@using Microsoft.JSInterop
+@namespace MASA.Blazor.Experimental.Components
+
+<MTooltip Disabled="IsDisabled" Top>
+    <ActivatorContent>
+        <span class="d-inline-block text-truncate"
+              style="width: 100%"
+              @ref="ElementReference"
+              @attributes="@context.Attrs">
+            @ChildContent
+        </span>
+    </ActivatorContent>
+    <ChildContent>
+        @TooltipContent
+    </ChildContent>
+</MTooltip>
+
+@code
+{
+    [Inject]
+    private IJSRuntime Js { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string Tooltip { get; set; }
+
+    private ElementReference ElementReference { get; set; }
+
+    private bool IsDisabled { get; set; }
+
+    private RenderFragment TooltipContent
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(Tooltip))
+            {
+                return ChildContent;
+            }
+
+            return @<span>@Tooltip</span>;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            IsDisabled = !(await IsEllipsis());
+            StateHasChanged();
+        }
+    }
+
+    private async Task<bool> IsEllipsis()
+    {
+        return await Js.InvokeAsync<bool>("MasaBlazorExperimental.isEllipsis", ElementReference);
+    }
+}

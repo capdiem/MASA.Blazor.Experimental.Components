@@ -1,0 +1,22 @@
+﻿@namespace MASA.Blazor.Experimental.Components
+
+<div>
+    <span @ref="Ref">
+        @ChildContent
+    </span>
+
+    <MTooltip Top Disabled="DisableTooltip">
+        <ActivatorContent>
+            <MIcon Color="primary"
+                   Disabled="_copying"
+                   Small
+                   OnClick="HandleOnCopy"
+                   @attributes="@context.Attrs">
+                @Icon
+            </MIcon>
+        </ActivatorContent>
+        <ChildContent>
+            @Tooltip
+        </ChildContent>
+    </MTooltip>
+</div>

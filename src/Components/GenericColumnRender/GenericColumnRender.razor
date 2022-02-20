@@ -1,0 +1,42 @@
+﻿@namespace MASA.Blazor.Experimental.Components
+
+@if (InternalValue is Enum @enum)
+{
+    var desc = @enum.GetDescription().Description;
+
+    if (ChippedEnum && !string.IsNullOrEmpty(desc))
+    {
+        <MChip Class="@ColorHelper.GenChipColorClass((int)(object)@enum)" Small="SmallChip">@desc</MChip>
+    }
+    else
+    {
+        @desc
+    }
+}
+else if (InternalValue is DateTime dateTime)
+{
+    if (DefaultDateTimeChecker!.Invoke(dateTime))
+    {
+        @("")
+    }
+    else
+    {
+        var major = @DateOnly.FromDateTime(dateTime).ToString(DateFormat);
+
+        string? minor = null;
+        if (!IgnoreTime)
+        {
+            minor = @TimeOnly.FromDateTime(dateTime).ToString(TimeFormat);
+        }
+
+        <BlockText Major="@major" Minor="@minor"></BlockText>
+    }
+}
+else if (InternalValue is bool b)
+{
+    @BoolRender!.Invoke(b)
+}
+else
+{
+    @InternalValue
+}
