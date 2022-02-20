@@ -1,0 +1,21 @@
+name: Publish to Nuget
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    name: build, pack & publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Publish NuGet
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          # Filepath of the project to be packaged, relative to root of repository
+          PROJECT_FILE_PATH: src/MASA.Blazor.Experimental.Components.csproj
+          # API key to authenticate with NuGet server
+          NUGET_KEY: oy2ejrtl3kczt2rqqmkqenxgzzxdwbhenjutbg77tjggmu
