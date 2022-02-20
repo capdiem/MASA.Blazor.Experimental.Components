@@ -3,7 +3,9 @@ name: Publish to Nuget
 on:
   push:
     branches:
-    - main
+      - main
+    paths:
+      - src/*.csproj
 
 jobs:
   publish:
