@@ -1,0 +1,68 @@
+﻿@page "/popup-service"
+
+<h2>ConfirmService</h2>
+
+<MButton Class="text-capitalize"
+         Color="primary"
+         OnClick="Confirm_OnOkAsync">
+    OnOk Async
+</MButton>
+<MButton Class="text-capitalize"
+         Color="primary"
+         OnClick="Confirm_OnOkAsync_WithException">
+    OnOk Async with exception
+</MButton>
+
+@code {
+
+    [Inject]
+    private IPopupService PopupService { get; set; }
+
+    private async Task Confirm_OnOkAsync()
+    {
+        var confirmed = await PopupService.ConfirmAsync(
+            "Title",
+            "There is the content.",
+            async e => await Task.Delay(2000)
+            );
+
+        if (confirmed)
+        {
+            await PopupService.MessageAsync("Ok was clicked!", AlertTypes.Info);
+        }
+        else
+        {
+            await PopupService.MessageAsync("Cancel was clicked!", AlertTypes.Warning);
+        }
+    }
+
+    private async Task Confirm_OnOkAsync_WithException()
+    {
+        var confirmed = await PopupService.ConfirmAsync(
+            "Title",
+            "There is the content.",
+            async e =>
+            {
+                try
+                {
+                    await Task.Delay(2000);
+                    throw new Exception("something wrong happens!");
+                }
+                catch (Exception ex)
+                {
+                    e.Cancel = true;
+                    await PopupService.MessageAsync(ex);
+                }
+            });
+
+        if (confirmed)
+        {
+            await PopupService.MessageAsync("Ok was clicked!", AlertTypes.Info);
+        }
+        else
+        {
+            await PopupService.MessageAsync("Cancel was clicked!", AlertTypes.Warning);
+        }
+    }
+
+}
