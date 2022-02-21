@@ -34,20 +34,32 @@
     [Parameter]
     public string? Content { get; set; }
 
+    [Parameter]
+    public Func<PopupOkEventArgs<bool>, Task>? OnOk { get; set; }
+
     private Task HandleOnCancel()
     {
-        return HideAndSetResult(false);
-    }
-
-    private Task HandleOnOk()
-    {
-        return HideAndSetResult(true);
-    }
-
-    private async Task HideAndSetResult(bool value)
-    {
         Visible = false;
+        return SetResult(false);
+    }
 
+    private async Task HandleOnOk()
+    {
+        PopupOkEventArgs<bool> args = new(true);
+        if (OnOk != null)
+        {
+            await OnOk.Invoke(args);
+        }
+
+        if (args.Cancel is null or false)
+        {
+            Visible = false;
+            await SetResult(true);
+        }
+    }
+
+    private async Task SetResult(bool value)
+    {
         if (PopupItem != null)
         {
             await Task.Delay(256);
