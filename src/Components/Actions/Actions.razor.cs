@@ -43,6 +43,15 @@ public partial class Actions
         StateHasChanged();
     }
 
+    internal void RemoveButton(Action action)
+    {
+        ChildActions.Remove(action);
+
+        Items = ChildActions;
+        
+        StateHasChanged();
+    }
+
     private async Task OnClickProxy(Action action)
     {
         if (action.DisableAutoLoading)

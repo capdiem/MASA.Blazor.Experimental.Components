@@ -1,6 +1,11 @@
 ﻿@page "/actions-component"
 
-<Actions>
+<Actions DisplayCount="@displayCount">
+    @if (showHeart)
+    {
+        <Action Icon="mdi-heart" Label="Heart"></Action>
+    }
+
     <Action Icon="@eyeIcon"
             Label="@eyeLabel"
             OnClick="@(() => Log("查看"))">
@@ -17,6 +22,12 @@
 </Actions>
 
 <MDivider Class="my-2"></MDivider>
+
+<MButtonGroup Dense>
+    <MButton OnClick="Reduce">-</MButton>
+    <MButton Disabled>@displayCount</MButton>
+    <MButton OnClick="Increase">+</MButton>
+</MButtonGroup>
 
 <MButton Color="primary"
          OnClick="() => editVisible = !editVisible">
@@ -35,9 +46,21 @@
 
 @code {
 
+    int displayCount = 2;
     bool editVisible = true;
     string eyeLabel = "查看";
     string eyeIcon = "mdi-eye";
+
+    bool showHeart = true;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            showHeart = false;
+            StateHasChanged();
+        }
+    }
 
     void Log(string value)
     {
@@ -54,6 +77,17 @@
         {
             eyeIcon = "mdi-eye";
         }
+    }
+
+    void Reduce()
+    {
+        if (displayCount == 0) return;
+        displayCount--;
+    }
+
+    void Increase()
+    {
+        displayCount++;
     }
 
 }

@@ -1,8 +1,8 @@
 ﻿namespace MASA.Blazor.Experimental.Components;
 
-public class Action : ComponentBase
+public class Action : ComponentBase, IDisposable
 {
-    [CascadingParameter] private Actions Actions { get; set; }
+    [CascadingParameter] private Actions? Actions { get; set; }
 
     [Parameter] public bool DisableAutoLoading { get; set; }
 
@@ -49,16 +49,13 @@ public class Action : ComponentBase
     {
         base.OnInitialized();
 
-        if (Actions != null)
-        {
-            Actions.AddButton(this);
-        }
+        Actions?.AddButton(this);
     }
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        
+
         _shouldRender = _prevVisible != Visible;
 
         _prevVisible = Visible;
@@ -69,7 +66,12 @@ public class Action : ComponentBase
         if (!_shouldRender) return false;
 
         Actions?.InvokeStateHasChanged();
-            
+
         return true;
+    }
+
+    public void Dispose()
+    {
+        Actions?.RemoveButton(this);
     }
 }
