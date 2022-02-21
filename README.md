@@ -1,4 +1,4 @@
-# MASA.Blazor.Components [![Publish to Nuget](https://github.com/capdiem/MASA.Blazor.Experimental.Components/actions/workflows/nuget.yml/badge.svg)](https://github.com/capdiem/MASA.Blazor.Experimental.Components/actions/workflows/nuget.yml)
+# MASA.Blazor.Experimental.Components [![Publish to Nuget](https://github.com/capdiem/MASA.Blazor.Experimental.Components/actions/workflows/nuget.yml/badge.svg)](https://github.com/capdiem/MASA.Blazor.Experimental.Components/actions/workflows/nuget.yml)
 Experimental components about MASA.Blazor
 
 ## Usage
