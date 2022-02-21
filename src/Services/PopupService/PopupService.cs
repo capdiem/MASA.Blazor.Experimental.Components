@@ -15,13 +15,14 @@ public class PopupService : IPopupService
         return item.TaskCompletionSource.Task;
     }
 
-    public async Task<bool> ConfirmAsync(string title, string content)
+    public async Task<bool> ConfirmAsync(string title, string content, Func<PopupOkEventArgs, Task>? onOk = null)
     {
-        var res = await OpenAsync(typeof(Confirm), new Dictionary<string, object>()
+        ConfirmParameters param = new()
         {
-            { nameof(Confirm.Title), title },
-            { nameof(Confirm.Content), content },
-        });
+            OnOk = onOk
+        };
+
+        var res = await OpenAsync(typeof(Confirm), param.ToDictionary(title, content));
 
         if (res is bool v)
         {
@@ -34,8 +35,10 @@ public class PopupService : IPopupService
     public async Task<string> PromptAsync(string title, string content,
         Func<PopupOkEventArgs<string>, Task>? onOk = null)
     {
-        PromptParameters param = new();
-        param.OnOk = onOk;
+        PromptParameters param = new()
+        {
+            OnOk = onOk
+        };
 
         var res = await OpenAsync(typeof(Prompt), param.ToDictionary(title, content));
 

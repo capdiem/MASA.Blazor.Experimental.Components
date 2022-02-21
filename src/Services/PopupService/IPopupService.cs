@@ -2,7 +2,9 @@ namespace MASA.Blazor.Experimental.Components;
 
 public interface IPopupService
 {
-    Task<bool> ConfirmAsync(string title, string content);
+    Task<bool> ConfirmAsync(string title, string content, Func<PopupOkEventArgs, Task>? onOk = null);
+
+    Task<object> OpenAsync(Type componentType, Dictionary<string, object> parameters);
 
     Task<string> PromptAsync(string title, string content, Func<PopupOkEventArgs<string>, Task>? onOk = null);
 

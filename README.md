@@ -13,3 +13,12 @@ builder.Services.AddMasaBlazorExperimentalComponents();
 <!-- _Layout.cshtml -->
 <script src="_content/MASA.Blazor.Experimental.Components/js/experimental.js"></script>
 ```
+```html
+<!-- MainLayout.razor -->
+<MApp>
+    <!-- your code here -->
+
+    <!-- Support inject the IPopupService -->
+    <MasaPopupProvider/>
+</MApp>
+```
