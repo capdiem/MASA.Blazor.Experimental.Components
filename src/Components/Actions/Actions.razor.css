@@ -1,0 +1,8 @@
+.m-ec-actions {
+    display: flex;
+    align-items: center;
+}
+
+.m-ec-actions ::deep > * {
+    margin-right: 4px;
+}
