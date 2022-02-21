@@ -1,0 +1,59 @@
+﻿@page "/actions-component"
+
+<Actions>
+    <Action Icon="@eyeIcon"
+            Label="@eyeLabel"
+            OnClick="@(() => Log("查看"))">
+    </Action>
+    <Action Icon="mdi-pencil-outline"
+            Visible="editVisible"
+            Label="编辑"
+            OnClick="@(() => Log("编辑"))">
+    </Action>
+    <Action Icon="mdi-delete-outline"
+            Label="删除"
+            OnClick="@(() => Log("删除"))">
+    </Action>
+</Actions>
+
+<MDivider Class="my-2"></MDivider>
+
+<MButton Color="primary"
+         OnClick="() => editVisible = !editVisible">
+    Toggle Edit(@editVisible)
+</MButton>
+
+<MButton Color="primary"
+         OnClick="() => eyeLabel += '.'">
+    Append . to eye label
+</MButton>
+
+<MButton Color="primary"
+         OnClick="ToggleEyeIcon">
+    Toggle eye icon
+</MButton>
+
+@code {
+
+    bool editVisible = true;
+    string eyeLabel = "查看";
+    string eyeIcon = "mdi-eye";
+
+    void Log(string value)
+    {
+        Console.WriteLine(value);
+    }
+
+    void ToggleEyeIcon()
+    {
+        if (eyeIcon == "mdi-eye")
+        {
+            eyeIcon += "-outline";
+        }
+        else
+        {
+            eyeIcon = "mdi-eye";
+        }
+    }
+
+}
