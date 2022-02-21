@@ -15,7 +15,7 @@ public class PopupService : IPopupService
         return item.TaskCompletionSource.Task;
     }
 
-    public async Task<bool> ConfirmAsync(string title, string content, Func<PopupOkEventArgs<bool>, Task>? onOk = null)
+    public async Task<bool> ConfirmAsync(string title, string content, Func<PopupOkEventArgs, Task>? onOk = null)
     {
         ConfirmParameters param = new()
         {
