@@ -29,6 +29,11 @@ public partial class Actions
         Items ??= Enumerable.Empty<Action>();
     }
 
+    internal void InvokeStateHasChanged()
+    {
+        StateHasChanged();
+    }
+
     internal void AddButton(Action action)
     {
         ChildActions.Add(action);

@@ -38,6 +38,9 @@ public class Action : ComponentBase
         OnClick = onClick;
     }
 
+    private bool _prevVisible;
+    private bool _shouldRender;
+
     public bool Loading { get; set; }
 
     public bool ShowTooltip => !string.IsNullOrWhiteSpace(Icon) && !string.IsNullOrWhiteSpace(Label);
@@ -50,5 +53,23 @@ public class Action : ComponentBase
         {
             Actions.AddButton(this);
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        
+        _shouldRender = _prevVisible != Visible;
+
+        _prevVisible = Visible;
+    }
+
+    protected override bool ShouldRender()
+    {
+        if (!_shouldRender) return false;
+
+        Actions?.InvokeStateHasChanged();
+            
+        return true;
     }
 }
