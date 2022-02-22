@@ -56,9 +56,9 @@ public partial class PDateTimePicker<TValue>
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
-        await base.SetParametersAsync(parameters);
-
         PrependInnerIcon = "mdi-calendar";
+
+        await base.SetParametersAsync(parameters);
     }
 
     protected override async Task OnInitializedAsync()

@@ -33,7 +33,7 @@ public partial class PDatePicker<TValue>
     #endregion
 
     [Parameter] public DateOnly? DefaultSelectedValue { get; set; }
-    [Parameter] public string Format { get; set; }
+    [Parameter] public string? Format { get; set; }
     [Parameter] public EventCallback OnOk { get; set; }
 
     private bool _menuValue;
@@ -56,9 +56,10 @@ public partial class PDatePicker<TValue>
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
+        PrependInnerIcon = "mdi-calendar";
+
         await base.SetParametersAsync(parameters);
 
-        PrependInnerIcon = "mdi-calendar";
     }
 
     private void HandleOnCancel()
