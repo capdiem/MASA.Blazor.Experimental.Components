@@ -111,16 +111,14 @@ public partial class PDatePicker<TValue>
 
             if (InternalValue == null || InternalValue.Equals(default))
             {
-                // Apply the DefaultSelectedValue to Range DatePicker may be confusing,
-                // so ignore that
-                UpdateInternalValue(DefaultSelectedValue, true);
+                UpdateInternalValue(DefaultSelectedValue);
             }
         }
 
         _menuValue = value;
     }
 
-    private void UpdateInternalValue(DateOnly? dateOnly, bool ignoreRange = false)
+    private void UpdateInternalValue(DateOnly? dateOnly)
     {
         if (!dateOnly.HasValue)
         {
@@ -129,9 +127,7 @@ public partial class PDatePicker<TValue>
 
         if (Range)
         {
-            if (ignoreRange) return;
-
-            InternalValue = (TValue)(object)new List<DateOnly>() { dateOnly.Value };
+            InternalValue = (TValue)(object)new List<DateOnly>() { dateOnly.Value, dateOnly.Value };
         }
         else
         {
