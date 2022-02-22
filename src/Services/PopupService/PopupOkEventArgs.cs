@@ -12,5 +12,5 @@ public class PopupOkEventArgs<T> : PopupOkEventArgs
         Value = value;
     }
 
-    private T Value { get;  }
+    public T Value { get; }
 }
