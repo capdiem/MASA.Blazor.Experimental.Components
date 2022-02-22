@@ -9,6 +9,7 @@
     </MCol>
     <MCol Cols="12" Sm="6">
         <PDateTimePicker @bind-Value="_dateTime1"
+                         Clearable
                          Dense
                          Label="DateTime"
                          Outlined
@@ -17,6 +18,7 @@
     </MCol>
     <MCol Cols="12" Sm="6">
         <PDateTimePicker @bind-Value="_dateTime2"
+                         Clearable
                          Dense
                          Label="DateTime?"
                          Outlined
@@ -32,10 +34,11 @@
 <MRow>
     <MCol Cols="12">
         The type of Value supports
-        <code>DateOnly?</code>.
+        <code>DateOnly?</code> and <code>DateOnly</code>(cannot be <code>Clearable</code>).
     </MCol>
     <MCol Cols="12" Sm="6">
         <PDatePicker @bind-Value="_date1"
+                     Clearable
                      Dense
                      Label="DateOnly?"
                      Outlined>
@@ -43,30 +46,34 @@
     </MCol>
     <MCol Cols="12" Sm="6">
         <PDatePicker @bind-Value="_date2"
+                     Clearable
                      Dense
-                     Label="@("Value(DateOnly) can not be DateOnly.MinValue")"
+                     Label="@("Value(DateOnly) can not be default(DateOnly.MinValue). Throw if clear.")"
                      Outlined>
         </PDatePicker>
     </MCol>
     <MCol Cols="12" Sm="6">
         <PDatePicker @bind-Value="_date3"
-                     DefaultSelectedValue="DateOnly.FromDateTime(DateTime.Now)"
+                     Clearable
+                     DefaultSelectedValue="TodayDate"
                      Dense
-                     Label="Set default selected date when popup"
+                     Label="DefaultSelectedValue"
                      Outlined>
         </PDatePicker>
     </MCol>
     <MCol Cols="12" Sm="6">
         <PDatePicker @bind-Value="_dates1"
+                     Clearable
                      Dense
-                     Label="Range"
+                     Label="Range with non-null Value"
                      Outlined
                      Range>
         </PDatePicker>
     </MCol>
     <MCol Cols="12" Sm="6">
         <PDatePicker @bind-Value="_dates2"
-                     DefaultSelectedValue="DateOnly.FromDateTime(DateTime.Now)"
+                     Clearable
+                     DefaultSelectedValue="@(new List<DateOnly>() { TodayDate.AddDays(-1), TodayDate })"
                      Dense
                      Label="Range with DefaultSelectedValue"
                      Outlined
@@ -77,6 +84,8 @@
 
 
 @code {
+    private readonly DateOnly TodayDate = DateOnly.FromDateTime(DateTime.Now);
+
     private DateTime? _dateTime1;
     private DateTime _dateTime2;
 
@@ -91,5 +100,4 @@
     };
 
     private List<DateOnly> _dates2;
-
 }

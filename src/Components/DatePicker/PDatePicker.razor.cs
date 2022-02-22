@@ -32,7 +32,7 @@ public partial class PDatePicker<TValue>
 
     #endregion
 
-    [Parameter] public DateOnly? DefaultSelectedValue { get; set; }
+    [Parameter] public TValue? DefaultSelectedValue { get; set; }
     [Parameter] public string? Format { get; set; }
     [Parameter] public EventCallback OnOk { get; set; }
 
@@ -67,7 +67,7 @@ public partial class PDatePicker<TValue>
                 throw new ArgumentException($"{nameof(Value)} cannot be DateOnly.MinValue");
             }
 
-            UpdateInternalValue(date);
+            UpdateInternalValue((TValue)(object)date);
         }
     }
 
@@ -118,21 +118,27 @@ public partial class PDatePicker<TValue>
         _menuValue = value;
     }
 
-    private void UpdateInternalValue(DateOnly? dateOnly)
+    private void OnNow()
     {
-        if (!dateOnly.HasValue)
-        {
-            return;
-        }
+        object now;
+
+        var todayDate = DateOnly.FromDateTime(DateTime.Now);
 
         if (Range)
         {
-            InternalValue = (TValue)(object)new List<DateOnly>() { dateOnly.Value, dateOnly.Value };
+            now = new List<DateOnly>() { todayDate, todayDate };
         }
         else
         {
-            InternalValue = (TValue)(object)dateOnly.Value;
+            now = todayDate;
         }
+
+        UpdateInternalValue((TValue)now);
+    }
+
+    private void UpdateInternalValue(TValue? value)
+    {
+        InternalValue = value;
     }
 
     private async Task UpdateValue(TValue value)
