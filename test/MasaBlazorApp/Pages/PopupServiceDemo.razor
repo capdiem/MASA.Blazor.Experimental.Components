@@ -13,7 +13,7 @@
     OnOk Async with exception
 </MButton>
 
-<MDivider></MDivider>
+<MDivider Class="my-2"></MDivider>
 
 <h2>PromptService</h2>
 
@@ -84,6 +84,12 @@
     private async Task Prompt_OnOk()
     {
         var res = await PopupService.PromptAsync("Title", "Please enter the 'Content' to confirm");
+
+        if (res == null)
+        {
+            await PopupService.MessageAsync($"Cancel button was clicked!");
+            return;
+        }
 
         if (res != "Content")
         {
