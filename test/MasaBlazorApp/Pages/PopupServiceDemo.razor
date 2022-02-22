@@ -13,6 +13,22 @@
     OnOk Async with exception
 </MButton>
 
+<MDivider></MDivider>
+
+<h2>PromptService</h2>
+
+<MButton Class="text-capitalize"
+         Color="primary"
+         OnClick="Prompt_OnOk">
+    Enter value and OnOk
+</MButton>
+
+<MButton Class="text-capitalize"
+         Color="primary"
+         OnClick="Prompt_OnOkAsync">
+    Enter value and OnOk Async
+</MButton>
+
 @code {
 
     [Inject]
@@ -63,6 +79,39 @@
         {
             await PopupService.MessageAsync("Cancel was clicked!", AlertTypes.Warning);
         }
+    }
+
+    private async Task Prompt_OnOk()
+    {
+        var res = await PopupService.PromptAsync("Title", "Please enter the 'Content' to confirm");
+
+        if (res != "Content")
+        {
+            await PopupService.MessageAsync($"Input content('{res}') is not equal to 'Content'", AlertTypes.Error);
+            return;
+        }
+
+        await PopupService.MessageAsync($"Input content('{res}') is equal to 'Content'", AlertTypes.Success);
+    }
+
+    private async Task Prompt_OnOkAsync()
+    {
+        await PopupService.PromptAsync(
+            "Title",
+            "Please enter the 'Content' to confirm",
+            async e =>
+            {
+                if (e.Value == "Content")
+                {
+                    await Task.Delay(2000);
+                }
+                else
+                {
+                    // TODO: bug here, value in textarea would be clear!
+                    await PopupService.MessageAsync($"Input content('{e.Value}') is not equal to 'Content'", AlertTypes.Error);
+                    e.Cancel = true;
+                }
+            });
     }
 
 }

@@ -21,8 +21,17 @@
 
         <MCardActions>
             <MSpacer/>
-            <MButton Text OnClick="HandleOnCancel">取消</MButton>
-            <MButton Text Color="primary" OnClick="HandleOnOk">确定</MButton>
+            <MButton Disabled="_okLoading"
+                     OnClick="HandleOnCancel"
+                     Text>
+                取消
+            </MButton>
+            <MButton Color="primary"
+                     Loading="_okLoading"
+                     OnClick="HandleOnOk"
+                     Text>
+                确定
+            </MButton>
         </MCardActions>
     </MCard>
 </MDialog>
@@ -46,6 +55,7 @@
     public string Value { get; set; }
 
     private MForm _form;
+    private bool _okLoading;
 
     private Task HandleOnCancel()
     {
@@ -59,7 +69,9 @@
 
         if (OnOk != null)
         {
+            _okLoading = true;
             await OnOk.Invoke(args);
+            _okLoading = false;
         }
 
         if (args.Cancel is null or false)
