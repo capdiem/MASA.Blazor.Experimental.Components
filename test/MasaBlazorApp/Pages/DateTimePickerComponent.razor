@@ -1,0 +1,95 @@
+﻿@page "/datetime-picker-component"
+
+<h2>PDateTimePicker</h2>
+
+<MRow>
+    <MCol Cols="12">
+        The type of Value supports
+        <code>DateTime</code> and <code>DateTime?</code>.
+    </MCol>
+    <MCol Cols="12" Sm="6">
+        <PDateTimePicker @bind-Value="_dateTime1"
+                         Dense
+                         Label="DateTime"
+                         Outlined
+                         TimeZoneOffset="TimeSpan.FromHours(8)">
+        </PDateTimePicker>
+    </MCol>
+    <MCol Cols="12" Sm="6">
+        <PDateTimePicker @bind-Value="_dateTime2"
+                         Dense
+                         Label="DateTime?"
+                         Outlined
+                         TimeZoneOffset="TimeSpan.FromHours(8)">
+        </PDateTimePicker>
+    </MCol>
+</MRow>
+
+<MDivider Class="my-2"></MDivider>
+
+<h2>PDatePicker</h2>
+
+<MRow>
+    <MCol Cols="12">
+        The type of Value supports
+        <code>DateOnly?</code>.
+    </MCol>
+    <MCol Cols="12" Sm="6">
+        <PDatePicker @bind-Value="_date1"
+                     Dense
+                     Label="DateOnly?"
+                     Outlined>
+        </PDatePicker>
+    </MCol>
+    <MCol Cols="12" Sm="6">
+        <PDatePicker @bind-Value="_date2"
+                     Dense
+                     Label="@("Value(DateOnly) can not be DateOnly.MinValue")"
+                     Outlined>
+        </PDatePicker>
+    </MCol>
+    <MCol Cols="12" Sm="6">
+        <PDatePicker @bind-Value="_date3"
+                     DefaultSelectedValue="DateOnly.FromDateTime(DateTime.Now)"
+                     Dense
+                     Label="Set default selected date when popup"
+                     Outlined>
+        </PDatePicker>
+    </MCol>
+    <MCol Cols="12" Sm="6">
+        <PDatePicker @bind-Value="_dates1"
+                     Dense
+                     Label="Range"
+                     Outlined
+                     Range>
+        </PDatePicker>
+    </MCol>
+    <MCol Cols="12" Sm="6">
+        <PDatePicker @bind-Value="_dates2"
+                     DefaultSelectedValue="DateOnly.FromDateTime(DateTime.Now)"
+                     Dense
+                     Label="Range with DefaultSelectedValue"
+                     Outlined
+                     Range>
+        </PDatePicker>
+    </MCol>
+</MRow>
+
+
+@code {
+    private DateTime? _dateTime1;
+    private DateTime _dateTime2;
+
+    private DateOnly? _date1;
+    private DateOnly _date2 = DateOnly.FromDateTime(DateTime.Now);
+    private DateOnly? _date3;
+
+    private List<DateOnly> _dates1 = new()
+    {
+        DateOnly.FromDateTime(DateTime.Now.AddDays(-1)),
+        DateOnly.FromDateTime(DateTime.Now)
+    };
+
+    private List<DateOnly> _dates2;
+
+}
