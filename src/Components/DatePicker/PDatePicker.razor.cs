@@ -60,6 +60,15 @@ public partial class PDatePicker<TValue>
 
         await base.SetParametersAsync(parameters);
 
+        if (!Range && Value is DateOnly date)
+        {
+            if (date == default)
+            {
+                throw new ArgumentException($"{nameof(Value)} cannot be DateOnly.MinValue");
+            }
+
+            UpdateInternalValue(date);
+        }
     }
 
     private void HandleOnCancel()
