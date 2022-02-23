@@ -8,6 +8,12 @@ public partial class CopyableText
 
     [Parameter] public RenderFragment ChildContent { get; set; }
 
+    [Parameter] public string Class { get; set; }
+
+    [Parameter] public string ContentClass { get; set; }
+
+    [Parameter] public string ContentStyle { get; set; }
+
     [Parameter] public string CopiedIcon { get; set; }
 
     [Parameter] public string CopyIcon { get; set; }
@@ -15,6 +21,8 @@ public partial class CopyableText
     [Parameter] public bool DisableTooltip { get; set; }
 
     [Parameter] public EventCallback OnCopy { get; set; }
+
+    [Parameter] public string Style { get; set; }
 
     [Parameter] public string Text { get; set; }
 
@@ -33,7 +41,7 @@ public partial class CopyableText
         Tooltip ??= "复制";
     }
 
-    public string Icon => !_copying ? CopyIcon : CopiedIcon;
+    private string Icon => !_copying ? CopyIcon : CopiedIcon;
 
     private async Task HandleOnCopy()
     {
