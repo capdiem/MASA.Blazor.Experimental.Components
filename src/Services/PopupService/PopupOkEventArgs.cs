@@ -1,4 +1,4 @@
-﻿namespace MASA.Blazor.Experimental.Components;
+﻿namespace Masa.Blazor.Experimental.Components;
 
 public class PopupOkEventArgs
 {

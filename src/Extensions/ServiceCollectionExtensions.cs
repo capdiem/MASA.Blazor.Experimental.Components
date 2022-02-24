@@ -1,4 +1,4 @@
-﻿using MASA.Blazor.Experimental.Components;
+﻿using Masa.Blazor.Experimental.Components;
 
 namespace  Microsoft.Extensions.DependencyInjection;
 

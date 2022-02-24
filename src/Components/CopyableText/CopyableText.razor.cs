@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace MASA.Blazor.Experimental.Components;
+namespace Masa.Blazor.Experimental.Components;
 
 public partial class CopyableText
 {

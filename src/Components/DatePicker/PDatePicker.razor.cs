@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace MASA.Blazor.Experimental.Components;
+namespace Masa.Blazor.Experimental.Components;
 
 public partial class PDatePicker<TValue>
 {
