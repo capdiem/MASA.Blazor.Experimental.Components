@@ -48,7 +48,7 @@
         {
             case Enum e:
                 color ??= GetColor(e, Colors);
-                content = e.GetDescription().Description;
+                content = ValueRender?.Invoke(Value) ?? e.GetDescription().Description;
                 break;
             case bool b:
                 color ??= GetColor(b ? 1 : 0, Colors);
