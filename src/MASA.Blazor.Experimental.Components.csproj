@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>MASA.Blazor.Experimental.Components</PackageId>
-    <Version>0.1.12</Version>
+    <Version>0.1.13</Version>
     <PackageTags>blazor;masa.blazor;component</PackageTags>
     <Description>
       Experimental components about MASA.Blazor

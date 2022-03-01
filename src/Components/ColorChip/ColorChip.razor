@@ -1,9 +1,12 @@
 ﻿@namespace Masa.Blazor.Experimental.Components
 @typeparam T
 
-<MChip Class="@Css" Small="Small" @attributes="@Attributes">
-    @Content
-</MChip>
+@if (!string.IsNullOrEmpty(Content))
+{
+    <MChip Class="@Css" Small="Small" @attributes="@Attributes">
+        @Content
+    </MChip>
+}
 
 @code
 {
@@ -33,7 +36,7 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        
+
         SetColorAndContent();
     }
 
@@ -60,7 +63,7 @@
                 break;
             default:
                 color ??= GetColor(0, Colors);
-                content = ValueRender?.Invoke(Value)?? Value?.ToString();
+                content = ValueRender?.Invoke(Value) ?? Value?.ToString();
                 break;
         }
 
