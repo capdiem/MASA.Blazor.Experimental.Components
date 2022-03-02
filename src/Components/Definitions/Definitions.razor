@@ -9,15 +9,25 @@
     {
         <MCol Cols="@Cols" Sm="@Sm" Md="@Md">
             <dl class="d-flex align-items-center @ItemClass" style="@ItemStyle">
-                <dt class="@TermClass" style="white-space: pre;@TermStyle">@item.Key@Colon</dt>
+                <dt class="@TermClass" style="white-space: pre;@TermStyle">
+                    @if (TermContent == null)
+                    {
+                        @item.Key
+                    }
+                    else
+                    {
+                        @TermContent(item)
+                    }
+                    @Colon
+                </dt>
                 <dd class="@DetailClass" style="@DetailStyle">
-                    @if (ItemContent == null)
+                    @if (DetailContent == null)
                     {
                         @item.Value
                     }
                     else
                     {
-                        @ItemContent(item)
+                        @DetailContent(item)
                     }
                 </dd>
             </dl>
@@ -43,12 +53,15 @@
     public string? DetailClass { get; set; }
 
     [Parameter]
+    public RenderFragment<KeyValuePair<string, object>>? DetailContent { get; set; }
+
+    [Parameter]
     public string? DetailStyle { get; set; }
 
     [Parameter]
     public string? ItemClass { get; set; }
 
-    [Parameter]
+    [Parameter, Obsolete("Use DetailContent")]
     public RenderFragment<KeyValuePair<string, object>>? ItemContent { get; set; }
 
     [Parameter, EditorRequired]
@@ -56,6 +69,9 @@
 
     [Parameter]
     public string? ItemStyle { get; set; }
+
+    [Parameter]
+    public RenderFragment<KeyValuePair<string, object>>? TermContent { get; set; }
 
     [Parameter]
     public StringNumber? Md { get; set; }
@@ -91,5 +107,7 @@
         base.OnParametersSet();
 
         Items ??= new Dictionary<string, object>();
+
+        DetailContent ??= ItemContent;
     }
 }
