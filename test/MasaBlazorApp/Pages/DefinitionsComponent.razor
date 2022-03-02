@@ -10,7 +10,8 @@
 
 <Definitions Items="data" Md="12" Sm="12"
              Colon=""
-             ItemStyle="justify-content: space-between">
+             ItemStyle="@(_ => "justify-content: space-between")"
+             TermStyle="@(item => item.Key == "a" ? "font-weight: bold" : "")">
 
 </Definitions>
 
