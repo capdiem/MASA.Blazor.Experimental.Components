@@ -9,7 +9,7 @@
     {
         <MCol Cols="@Cols" Sm="@Sm" Md="@Md">
             <dl class="d-flex align-items-center @ItemClass" style="@ItemStyle">
-                <dt class="@TermClass" style="white-space: pre;@TermStyle">
+                <dt class="mr-1 @TermClass" style="@TermStyle">
                     @if (TermContent == null)
                     {
                         @item.Key
@@ -96,7 +96,7 @@
         Cols = 12;
         Sm = 6;
         Md = 4;
-        Colon = ": ";
+        Colon = ":";
         Dense = true;
 
         await base.SetParametersAsync(parameters);
