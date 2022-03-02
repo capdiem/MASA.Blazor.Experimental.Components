@@ -1,12 +1,16 @@
 ﻿@namespace Masa.Blazor.Experimental.Components
 
-<MRow Dense Align="AlignTypes.Center" Class="@Class" Style="@Style">
-    @foreach (var item in Items)
+<MRow Align="AlignTypes.Center"
+      Class="@Class"
+      Dense="@Dense"
+      NoGutters="@NoGutters"
+      Style="@Style">
+    @foreach (var item in Items!)
     {
         <MCol Cols="@Cols" Sm="@Sm" Md="@Md">
-            <dl class="d-flex align-items-center neutral-lighten-2--text">
-                <dt>@item.Key：</dt>
-                <dd>
+            <dl class="d-flex align-items-center @ItemClass" style="@ItemStyle">
+                <dt class="@TermClass" style="white-space: pre;@TermStyle">@item.Key@Colon</dt>
+                <dd class="@DetailClass" style="@DetailStyle">
                     @if (ItemContent == null)
                     {
                         @item.Value
@@ -24,31 +28,60 @@
 @code
 {
     [Parameter]
-    public string Class { get; set; }
+    public string? Class { get; set; }
 
     [Parameter]
-    public StringNumber Cols { get; set; }
+    public string? Colon { get; set; }
+
+    [Parameter]
+    public StringNumber? Cols { get; set; }
+
+    [Parameter]
+    public bool Dense { get; set; }
+
+    [Parameter]
+    public string? DetailClass { get; set; }
+
+    [Parameter]
+    public string? DetailStyle { get; set; }
+
+    [Parameter]
+    public string? ItemClass { get; set; }
 
     [Parameter]
     public RenderFragment<KeyValuePair<string, object>>? ItemContent { get; set; }
 
-    [Parameter]
+    [Parameter, EditorRequired]
     public Dictionary<string, object>? Items { get; set; }
 
     [Parameter]
-    public StringNumber Md { get; set; }
+    public string? ItemStyle { get; set; }
 
     [Parameter]
-    public StringNumber Sm { get; set; }
+    public StringNumber? Md { get; set; }
 
     [Parameter]
-    public string Style { get; set; }
+    public bool NoGutters { get; set; }
+
+    [Parameter]
+    public StringNumber? Sm { get; set; }
+
+    [Parameter]
+    public string? Style { get; set; }
+
+    [Parameter]
+    public string? TermClass { get; set; }
+
+    [Parameter]
+    public string? TermStyle { get; set; }
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
         Cols = 12;
         Sm = 6;
         Md = 4;
+        Colon = ": ";
+        Dense = true;
 
         await base.SetParametersAsync(parameters);
     }

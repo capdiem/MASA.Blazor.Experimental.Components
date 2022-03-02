@@ -1,0 +1,33 @@
+﻿@page "/definitions-component"
+
+<Definitions Items="data"></Definitions>
+
+<MDivider Class="my-3"></MDivider>
+
+<Definitions Items="data" Md="12" Sm="12" NoGutters></Definitions>
+
+<MDivider Class="my-3"></MDivider>
+
+<Definitions Items="data" Md="12" Sm="12"
+             Colon=""
+             ItemStyle="justify-content: space-between">
+
+</Definitions>
+
+@code {
+
+    private static Dictionary<string, object> data = new()
+    {
+        ["a"] = "Anchor",
+        ["abbr"] = "Abbreviation",
+        ["acronym"] = "Acronym",
+        ["address"] = "Address",
+        ["alt"] = "alter",
+        ["b"] = "Bold",
+        ["bdo"] = "Direction",
+        ["big"] = "Big",
+        ["blockquote"] = "Block",
+        ["br"] = "Break",
+    };
+
+}
