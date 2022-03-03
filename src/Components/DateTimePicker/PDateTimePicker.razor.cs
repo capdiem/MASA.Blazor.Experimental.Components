@@ -61,9 +61,9 @@ public partial class PDateTimePicker<TValue>
         await base.SetParametersAsync(parameters);
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnParametersSet()
     {
-        await base.OnInitializedAsync();
+        base.OnParametersSet();
 
         DateTime? internalValue = null;
 
@@ -72,7 +72,7 @@ public partial class PDateTimePicker<TValue>
             internalValue = dateTime;
         }
 
-        UpdateInternalAndDisplay(internalValue);
+        UpdateInternalAndDisplay(internalValue ?? DefaultSelectedValue);
     }
 
     private void HandleOnCancel()
@@ -104,16 +104,6 @@ public partial class PDateTimePicker<TValue>
         {
             await OnOk.InvokeAsync();
         }
-    }
-
-    private void MenuValueChanged(bool value)
-    {
-        if (value)
-        {
-            UpdateDisplay(InternalValue ?? DefaultSelectedValue);
-        }
-
-        _menuValue = value;
     }
 
     private void OnHourFocus() => _hourFocused = true;

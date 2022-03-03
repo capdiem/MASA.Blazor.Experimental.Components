@@ -1,8 +1,7 @@
 ﻿@namespace Masa.Blazor.Experimental.Components
 @typeparam TValue
 
-<MMenu Value="_menuValue"
-       ValueChanged="MenuValueChanged"
+<MMenu @bind-Value="_menuValue"
        CloseOnContentClick="false"
        CloseOnClick="@(!TimeFocused)"
        MinWidth="@("auto")"
