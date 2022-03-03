@@ -6,13 +6,15 @@ public class Action : ComponentBase, IDisposable
 
     [Parameter] public bool DisableAutoLoading { get; set; }
 
+    [Parameter] public string Color { get; set; } = "primary";
+
     [Parameter] public string Icon { get; set; }
 
     [Parameter] public string Label { get; set; }
 
     [Parameter] public EventCallback OnClick { get; set; }
 
-    [Parameter] public string Color { get; set; } = "primary";
+    [Parameter] public int Sort { get; set; }
 
     [Parameter] public bool Visible { get; set; } = true;
 

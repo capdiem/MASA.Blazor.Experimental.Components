@@ -38,7 +38,7 @@ public partial class Actions
     {
         ChildActions.Add(action);
 
-        Items = ChildActions;
+        Items = ChildActions.OrderBy(item => item.Sort);
 
         StateHasChanged();
     }
@@ -47,8 +47,8 @@ public partial class Actions
     {
         ChildActions.Remove(action);
 
-        Items = ChildActions;
-        
+        Items = ChildActions.OrderBy(item => item.Sort);
+
         StateHasChanged();
     }
 
