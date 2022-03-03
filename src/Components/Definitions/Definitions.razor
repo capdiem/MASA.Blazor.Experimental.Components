@@ -8,8 +8,8 @@
     @foreach (var item in Items!)
     {
         <MCol Cols="@Cols" Sm="@Sm" Md="@Md">
-            <dl class="d-flex align-items-center @ItemClass?.Invoke(item)" style="@ItemStyle?.Invoke(item)">
-                <dt class="mr-1 d-inline-flex @TermClass?.Invoke(item)" style="@TermStyle?.Invoke(item)">
+            <dl class="d-flex align-items-start @ItemClass?.Invoke(item)" style="@ItemStyle?.Invoke(item)">
+                <dt class="mr-1 d-inline-flex @TermClass?.Invoke(item)" style="white-space: nowrap;@TermStyle?.Invoke(item)">
                     @if (TermContent == null)
                     {
                         @item.Key
