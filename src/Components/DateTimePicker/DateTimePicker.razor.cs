@@ -78,14 +78,11 @@ public partial class DateTimePicker<TValue>
 
     private async Task UpdateValue()
     {
-        var dateTime = default(TValue);
+        Date ??= DateOnly.FromDateTime(DateTime.Now);
 
-        if (Date.HasValue)
-        {
-            var time = new TimeOnly(Hour, Minute, Second);
+        var time = new TimeOnly(Hour, Minute, Second);
 
-            dateTime = (TValue)(object)Date.Value.ToDateTime(time);
-        }
+        var dateTime = (TValue)(object)Date.Value.ToDateTime(time);
 
         if (ValueChanged.HasDelegate)
         {
