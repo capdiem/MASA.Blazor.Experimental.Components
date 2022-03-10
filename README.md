@@ -11,6 +11,8 @@ builder.Services.AddMasaBlazorExperimentalComponents();
 ```
 ```html
 <!-- _Layout.cshtml -->
+<link href="_content/MASA.Blazor.Experimental.Components/css/experimental.css" rel="stylesheet"/>
+
 <script src="_content/MASA.Blazor.Experimental.Components/js/experimental.js"></script>
 ```
 ```html
