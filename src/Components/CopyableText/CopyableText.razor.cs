@@ -4,30 +4,36 @@ namespace Masa.Blazor.Experimental.Components;
 
 public partial class CopyableText
 {
-    [Inject] public IJSRuntime Js { get; set; }
+    [Inject] public IJSRuntime Js { get; set; } = null!;
 
-    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    [Parameter] public string Class { get; set; }
+    [Parameter] public string? Class { get; set; }
 
-    [Parameter] public string ContentClass { get; set; }
+    [Parameter] public string? ContentClass { get; set; }
 
-    [Parameter] public string ContentStyle { get; set; }
+    [Parameter] public string? ContentStyle { get; set; }
 
-    [Parameter] public string CopiedIcon { get; set; }
+    [Parameter] public string? CopiedIcon { get; set; }
 
-    [Parameter] public string CopyIcon { get; set; }
+    [Parameter] public string? CopyIcon { get; set; }
+
+    [Parameter] public string? CopyIconColor { get; set; } = "primary";
 
     [Parameter] public bool DisableTooltip { get; set; }
 
     [Parameter] public EventCallback OnCopy { get; set; }
 
-    [Parameter] public string Style { get; set; }
+    [Parameter] public string? Style { get; set; }
 
-    [Parameter] public string Text { get; set; }
+    [Parameter] public string? Text { get; set; }
 
-    [Parameter] public string Tooltip { get; set; }
+    [Parameter] public string? Tooltip { get; set; }
+
+    [Parameter] public string? TooltipClass { get; set; }
     
+    [Parameter] public string? TooltipStyle { get; set; }
+
     private bool _copying;
 
     protected ElementReference Ref { get; set; }
@@ -38,10 +44,10 @@ public partial class CopyableText
 
         CopiedIcon ??= "mdi-check";
         CopyIcon ??= "mdi-content-copy";
-        Tooltip ??= "复制";
+        Tooltip ??= "Copy";
     }
 
-    private string Icon => !_copying ? CopyIcon : CopiedIcon;
+    private string Icon => _copying ? CopiedIcon! : CopyIcon!;
 
     private async Task HandleOnCopy()
     {

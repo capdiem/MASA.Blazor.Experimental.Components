@@ -1,13 +1,19 @@
 ﻿@namespace Masa.Blazor.Experimental.Components
 
-<div class="text-no-wrap @Class" style="@Style">
-    <span @ref="Ref" class="@ContentClass" style="@ContentStyle">
+<div class="text-no-wrap p-copyable-text @Class" style="@Style">
+    <span class="p-copyable-text__content @ContentClass"
+          style="@ContentStyle"
+          @ref="Ref">
         @ChildContent
     </span>
 
-    <MTooltip Top Disabled="DisableTooltip">
+    <MTooltip ContentClass="@TooltipClass"
+              ContentStyle="@TooltipStyle"
+              Disabled="@DisableTooltip" 
+              Top>
         <ActivatorContent>
-            <MIcon Color="primary"
+            <MIcon Class="p-copyable-text__icon"
+                   Color="@CopyIconColor"
                    Disabled="_copying"
                    Small
                    OnClick="HandleOnCopy"

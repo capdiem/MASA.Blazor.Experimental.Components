@@ -1,0 +1,28 @@
+﻿@page "/copyable-text-component"
+
+<CopyableText>
+    There is a text that can be copied.
+</CopyableText>
+
+<CopyableText CopyIcon="mdi-clipboard-text"
+              CopyIconColor="orange"
+              CopiedIcon="mdi-check-circle"
+              Tooltip="Do you wanna copy?"
+              TooltipClass="orange">
+    With custom icons and tooltip.
+</CopyableText>
+
+<CopyableText Text="Text that you specific">
+    Copy the text that you specific by parameter Text.
+</CopyableText>
+
+<div style="width: 150px;">
+    <CopyableText ContentClass="text-truncate"
+                  ContentStyle="display:inline-block;vertical-align:top;width:100%;">
+        There is a text that can be copied.
+    </CopyableText>
+</div>
+
+@code {
+
+}
