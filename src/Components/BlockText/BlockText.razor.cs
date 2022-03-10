@@ -33,12 +33,12 @@ public partial class BlockText
     public string? Style { get; set; }
 
     [Parameter]
-    public List<BlockTagProps>? Tags { get; set; }
+    public IEnumerable<BlockTextTag>? Tags { get; set; }
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
 
-        Tags ??= new();
+        Tags ??= Enumerable.Empty<BlockTextTag>();
     }
 }

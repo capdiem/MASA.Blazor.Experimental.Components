@@ -2,9 +2,9 @@
 
 <MRow>
     <MCol Cols="12">
-        <BlockText Primary="云湃600G智能物联纯水机"
-                   Secondary="LSD-RC-C608"
-                   Tags="@(new List<BlockTagProps>() { new("饮水机", "primary"), new("洗地机", "orange") })">
+        <BlockText Primary="MASA Blazor"
+                   Secondary="A UI component library"
+                   Tags="@tags">
         </BlockText>
     </MCol>
     <MCol Cols="12">
@@ -12,9 +12,25 @@
                    Secondary="@TimeOnly.FromDateTime(DateTime.Now).ToString()">
         </BlockText>
     </MCol>
+    <MCol Cols="12">
+        <BlockText>
+            <PrimaryContent>
+                <CopyableText>MASA.Blazor</CopyableText>
+            </PrimaryContent>
+            <SecondaryContent>
+                <CopyableText>A UI component library</CopyableText>
+            </SecondaryContent>
+        </BlockText>
+    </MCol>
 </MRow>
 
 
 @code {
+
+    static IEnumerable<BlockTextTag> tags = new List<BlockTextTag>()
+    {
+        new("Blazor", "green", "white"),
+        new("Material Design", "purple", true)
+    };
 
 }

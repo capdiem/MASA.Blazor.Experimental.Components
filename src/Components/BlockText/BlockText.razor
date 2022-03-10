@@ -1,5 +1,4 @@
-﻿@using OneOf.Types
-@namespace Masa.Blazor.Experimental.Components
+﻿@namespace Masa.Blazor.Experimental.Components
 
 <div class="p-block-text @Class" style="@Style">
     <div class="p-block-text__primary @PrimaryClass" style="@PrimaryStyle">
@@ -15,10 +14,12 @@
     <div class="d-flex align-items-center">
         @foreach (var tag in Tags!)
         {
-            <MChip @key="tag" 
+            <MChip @key="tag"
                    Class="@($"mr-1 {tag.Class}")"
                    Color="@tag.Color"
                    Label
+                   Outlined="@tag.Outlined"
+                   TextColor="@tag.TextColor"
                    XSmall>
                 @tag.Text
             </MChip>

@@ -11,3 +11,12 @@
     font-size: .75rem;
     line-height: 16px;
 }
+
+.p-copyable-text {
+}
+
+.p-copyable-text .p-copyable-text__content {
+}
+
+.p-copyable-text .p-copyable-text__icon {
+}
