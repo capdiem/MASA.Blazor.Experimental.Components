@@ -1,0 +1,20 @@
+﻿@page "/block-text-component"
+
+<MRow>
+    <MCol Cols="12">
+        <BlockText Primary="云湃600G智能物联纯水机"
+                   Secondary="LSD-RC-C608"
+                   Tags="@(new List<BlockTagProps>() { new("饮水机", "primary"), new("洗地机", "orange") })">
+        </BlockText>
+    </MCol>
+    <MCol Cols="12">
+        <BlockText Primary="@DateOnly.FromDateTime(DateTime.Now).ToString()"
+                   Secondary="@TimeOnly.FromDateTime(DateTime.Now).ToString()">
+        </BlockText>
+    </MCol>
+</MRow>
+
+
+@code {
+
+}

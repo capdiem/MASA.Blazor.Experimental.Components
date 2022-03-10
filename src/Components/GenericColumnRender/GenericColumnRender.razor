@@ -29,7 +29,7 @@ else if (InternalValue is DateTime dateTime)
             minor = @TimeOnly.FromDateTime(dateTime).ToString(TimeFormat);
         }
 
-        <BlockText Major="@major" Minor="@minor"></BlockText>
+        <BlockText Primary="@major" Secondary="@minor"></BlockText>
     }
 }
 else if (InternalValue is bool b)
