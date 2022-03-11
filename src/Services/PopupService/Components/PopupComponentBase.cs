@@ -3,16 +3,19 @@
 public class PopupComponentBase : ComponentBase
 {
     [CascadingParameter]
-    protected ProviderItem PopupItem { get; set; }
+    protected MasaPopupProvider? MasaPopupProvider { get; set; }
+
+    [CascadingParameter]
+    protected ProviderItem? PopupItem { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object> Attributes { get; set; }
+    public Dictionary<string, object>? Attributes { get; set; }
 
     protected bool Visible { get; set; }
 
-    public override async Task SetParametersAsync(ParameterView parameters)
+    protected override void OnInitialized()
     {
-        await base.SetParametersAsync(parameters);
+        base.OnInitialized();
 
         Visible = true;
     }

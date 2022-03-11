@@ -1,6 +1,6 @@
 ﻿namespace Masa.Blazor.Experimental.Components;
 
-public class PopupService : IPopupService
+public partial class PopupService : IPopupService
 {
     private readonly IPopupProvider _popupProvider;
 
@@ -13,37 +13,6 @@ public class PopupService : IPopupService
     {
         var item = _popupProvider.Add(componentType, parameters, this, nameof(PopupService));
         return item.TaskCompletionSource.Task;
-    }
-
-    public async Task<bool> ConfirmAsync(string title, string content)
-    {
-        ConfirmParameters param = new();
-
-        var res = await OpenAsync(typeof(Confirm), param.ToDictionary(title, content));
-
-        if (res is bool v)
-        {
-            return v;
-        }
-
-        return false;
-    }
-
-    public async Task<bool> ConfirmAsync(string title, string content, Func<PopupOkEventArgs, Task> onOk)
-    {
-        ConfirmParameters param = new()
-        {
-            OnOk = onOk
-        };
-
-        var res = await OpenAsync(typeof(Confirm), param.ToDictionary(title, content));
-
-        if (res is bool v)
-        {
-            return v;
-        }
-
-        return false;
     }
 
     public async Task<string> PromptAsync(string title, string content)

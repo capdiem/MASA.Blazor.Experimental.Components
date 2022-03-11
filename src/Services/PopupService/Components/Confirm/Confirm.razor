@@ -6,79 +6,36 @@
          Persistent="true"
          @attributes="@Attributes">
     <MCard>
-        @if (Title != null)
+        @if (!string.IsNullOrEmpty(Title))
         {
-            <MCardTitle>@Title</MCardTitle>
+            <MCardTitle Class="@TitleClass" Style="@TitleStyle">
+                @if (!string.IsNullOrEmpty(ComputedIcon))
+                {
+                    <MIcon Color="@ComputedIconColor" Class="mr-2">@ComputedIcon</MIcon>
+                }
+                @Title
+            </MCardTitle>
         }
 
-        @if (Content != null)
+        @if (!string.IsNullOrEmpty(Content))
         {
-            <MCardText Style="padding-bottom: 0">
+            <MCardText Class="@($"pb-0 {ContentClass}")" Style="@ContentStyle">
                 @Content
             </MCardText>
         }
 
-        <MCardActions>
-            <MSpacer/>
-            <MButton Disabled="@_okLoading"
-                     OnClick="HandleOnCancel"
-                     Text>
-                取消
-            </MButton>
-            <MButton Color="primary"
-                     Loading="@_okLoading"
-                     OnClick="HandleOnOk"
-                     Text>
-                确定
-            </MButton>
+        <MCardActions Class="@ActionsClass" Style="@($"justify-content:end; {ActionsStyle}")">
+            <ModalButton Props="ComputedCancelButtonProps"
+                         Disabled="_okLoading"
+                         OnClick="HandleOnCancel">
+                @CancelText
+            </ModalButton>
+            <ModalButton Props="ComputedOkButtonProps"
+                         Disabled="_okLoading"
+                         Loading="_okLoading"
+                         OnClick="HandleOnSave">
+                @OkText
+            </ModalButton>
         </MCardActions>
     </MCard>
 </MDialog>
-
-@code {
-
-    [Parameter]
-    public string? Title { get; set; }
-
-    [Parameter]
-    public string? Content { get; set; }
-
-    [Parameter]
-    public Func<PopupOkEventArgs<bool>, Task>? OnOk { get; set; }
-
-    private bool _okLoading;
-
-    private Task HandleOnCancel()
-    {
-        Visible = false;
-        return SetResult(false);
-    }
-
-    private async Task HandleOnOk()
-    {
-        PopupOkEventArgs<bool> args = new(true);
-
-        if (OnOk != null)
-        {
-            _okLoading = true;
-            await OnOk.Invoke(args);
-            _okLoading = false;
-        }
-
-        if (args.Cancel is null or false)
-        {
-            Visible = false;
-            await SetResult(true);
-        }
-    }
-
-    private async Task SetResult(bool value)
-    {
-        if (PopupItem != null)
-        {
-            await Task.Delay(256);
-            PopupItem.Discard(value);
-        }
-    }
-
-}

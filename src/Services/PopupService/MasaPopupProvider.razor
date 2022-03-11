@@ -2,14 +2,19 @@
 @inject IPopupProvider PopupProvider
 @implements IDisposable
 
-@foreach (var item in PopupProvider.GetItems())
-{
-    <CascadingValue @key="item" Value="item">
-        <DynamicComponent Type="item.ComponentType" Parameters="item.Parameters"></DynamicComponent>
-    </CascadingValue>
-}
+<CascadingValue Value="this">
+    @foreach (var item in PopupProvider.GetItems())
+    {
+        <CascadingValue @key="item" Value="item">
+            <DynamicComponent Type="item.ComponentType" Parameters="item.Parameters"></DynamicComponent>
+        </CascadingValue>
+    }
+</CascadingValue>
 
 @code {
+
+    [Parameter]
+    public Action<ConfirmParameters>? ConfirmParameters { get; set; }
 
     protected override void OnInitialized()
     {

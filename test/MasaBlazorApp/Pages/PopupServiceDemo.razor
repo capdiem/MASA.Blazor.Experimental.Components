@@ -1,6 +1,6 @@
 ﻿@page "/popup-service"
 
-<h2>ConfirmService</h2>
+<h2>Confirm</h2>
 
 <MButton Class="text-capitalize"
          Color="primary"
@@ -15,7 +15,7 @@
 
 <MDivider Class="my-2"></MDivider>
 
-<h2>PromptService</h2>
+<h2>Prompt</h2>
 
 <MButton Class="text-capitalize"
          Color="primary"
@@ -39,6 +39,7 @@
         var confirmed = await PopupService.ConfirmAsync(
             "Title",
             "There is the content.",
+            AlertTypes.Success,
             async e => await Task.Delay(2000)
             );
 

@@ -55,5 +55,19 @@
         </MContainer>
     </MMain>
 
-    <MasaPopupProvider />
+    <MasaPopupProvider ConfirmParameters="@DefaultConfirmParameters">
+    </MasaPopupProvider>
 </MApp>
+
+@code {
+
+    static readonly Action<ConfirmParameters> DefaultConfirmParameters = confirm =>
+    {
+        confirm.TitleStyle = "font-weight: bold";
+        confirm.OkProps = ok =>
+        {
+            ok.Text = false;
+        };
+    };
+
+}
