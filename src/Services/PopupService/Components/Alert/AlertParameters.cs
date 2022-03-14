@@ -2,10 +2,6 @@
 
 public class AlertParameters : Alert
 {
-    public AlertParameters()
-    {
-    }
-
     public Dictionary<string, object> ToDictionary()
     {
         return new Dictionary<string, object>()

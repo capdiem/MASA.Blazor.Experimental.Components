@@ -2,23 +2,12 @@
 
 public class ConfirmParameters : Confirm
 {
-    public ConfirmParameters()
-    {
-    }
-
-    public ConfirmParameters(string title, string content)
-    {
-        Title = title;
-        Content = content;
-    }
-
     public Dictionary<string, object> ToDictionary()
     {
         return new Dictionary<string, object>
         {
             [nameof(ActionsClass)] = ActionsClass,
             [nameof(ActionsStyle)] = ActionsStyle,
-            [nameof(Attributes)] = Attributes,
             [nameof(CancelProps)] = CancelProps,
             [nameof(CancelText)] = CancelText,
             [nameof(Content)] = Content,

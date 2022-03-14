@@ -50,8 +50,7 @@ public partial class Alert : AlertingPopupComponentBase
 
     [Parameter] public string? ActionText { get; set; }
 
-    [EditorRequired]
-    [Parameter] public string? Content { get; set; }
+    [Parameter, EditorRequired] public string? Content { get; set; }
 
     [Parameter] public Func<Task>? OnAction { get; set; }
 
