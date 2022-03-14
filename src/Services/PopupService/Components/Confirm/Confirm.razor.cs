@@ -1,6 +1,6 @@
 ﻿namespace Masa.Blazor.Experimental.Components;
 
-public partial class Confirm : PopupComponentBase
+public partial class Confirm : AlertingPopupComponentBase
 {
     [Parameter] public string? ActionsClass { get; set; }
 
@@ -16,10 +16,6 @@ public partial class Confirm : PopupComponentBase
 
     [Parameter] public string? ContentStyle { get; set; }
 
-    [Parameter] public string? Icon { get; set; }
-
-    [Parameter] public string? IconColor { get; set; }
-
     [Parameter] public Func<PopupOkEventArgs<bool>, Task>? OnOk { get; set; }
 
     [Parameter] public string? OkText { get; set; }
@@ -32,54 +28,12 @@ public partial class Confirm : PopupComponentBase
 
     [Parameter] public string? TitleStyle { get; set; }
 
-    [Parameter] public AlertTypes? Type { get; set; }
-
     private bool _okLoading;
-    private ConfirmParameters? _defaultConfirmParameters;
+    private ConfirmParameters? _defaultParameters;
 
     private ModalButtonProps? ComputedOkButtonProps { get; set; }
 
     private ModalButtonProps? ComputedCancelButtonProps { get; set; }
-
-    private string? ComputedIcon
-    {
-        get
-        {
-            if (!string.IsNullOrWhiteSpace(Icon))
-            {
-                return Icon;
-            }
-
-            return Type switch
-            {
-                AlertTypes.Success => "mdi-checkbox-marked-circle-outline",
-                AlertTypes.Error => "mdi-alert-circle-outline",
-                AlertTypes.Info => "mdi-information",
-                AlertTypes.Warning => "mdi-alert-outline",
-                _ => null
-            };
-        }
-    }
-
-    private string? ComputedIconColor
-    {
-        get
-        {
-            if (!string.IsNullOrWhiteSpace(IconColor))
-            {
-                return IconColor;
-            }
-
-            return Type switch
-            {
-                AlertTypes.Success => "success",
-                AlertTypes.Info => "info",
-                AlertTypes.Warning => "warning",
-                AlertTypes.Error => "error",
-                _ => null
-            };
-        }
-    }
 
     protected override void OnParametersSet()
     {
@@ -89,14 +43,14 @@ public partial class Confirm : PopupComponentBase
             return;
         }
 
-        if (_defaultConfirmParameters is null && MasaPopupProvider?.ConfirmParameters is not null)
+        if (_defaultParameters is null && MasaPopupProvider?.ConfirmParameters is not null)
         {
-            _defaultConfirmParameters = new ConfirmParameters();
+            _defaultParameters = new ConfirmParameters();
 
-            MasaPopupProvider.ConfirmParameters?.Invoke(_defaultConfirmParameters);
+            MasaPopupProvider.ConfirmParameters.Invoke(_defaultParameters);
         }
 
-        _defaultConfirmParameters?.MapTo(this);
+        _defaultParameters?.MapTo(this);
 
         base.OnParametersSet();
 

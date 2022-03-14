@@ -24,15 +24,17 @@ public class ConfirmParameters : Confirm
             [nameof(Content)] = Content,
             [nameof(ContentClass)] = ContentClass,
             [nameof(ContentStyle)] = ContentStyle,
-            [nameof(Icon)] = Icon,
-            [nameof(IconColor)] = IconColor,
             [nameof(OnOk)] = OnOk,
             [nameof(OkProps)] = OkProps,
             [nameof(OkText)] = OkText,
             [nameof(Title)] = Title,
             [nameof(TitleClass)] = TitleClass,
             [nameof(TitleStyle)] = TitleStyle,
+
+            [nameof(Icon)] = Icon,
+            [nameof(IconColor)] = IconColor,
             [nameof(Type)] = Type,
+            [nameof(Attributes)] = Attributes,
         };
     }
 
@@ -45,14 +47,15 @@ public class ConfirmParameters : Confirm
         component.Content ??= Content;
         component.ContentClass ??= ContentClass;
         component.ContentStyle ??= ContentStyle;
-        component.Icon ??= Icon;
-        component.IconColor ??= IconColor;
         component.OkProps ??= OkProps;
         component.OkText ??= OkText;
         component.OnOk ??= OnOk;
         component.Title ??= Title;
         component.TitleClass ??= TitleClass;
         component.TitleStyle ??= TitleStyle;
+
+        component.Icon ??= Icon;
+        component.IconColor ??= IconColor;
         component.Type ??= Type;
         component.Attributes ??= Attributes;
     }
