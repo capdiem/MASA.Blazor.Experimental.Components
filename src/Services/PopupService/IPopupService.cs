@@ -28,11 +28,15 @@ public interface IPopupService
 
     #endregion
 
-    #region Message
+    #region Alert
 
-    Task MessageAsync(string message, AlertTypes type = AlertTypes.None);
+    Task AlertAsync(string content);
 
-    Task MessageAsync(Exception ex);
+    Task AlertAsync(string content, AlertTypes type);
+
+    Task AlertAsync(Exception ex);
+
+    Task AlertAsync(Action<AlertParameters> parameters);
 
     #endregion
 }

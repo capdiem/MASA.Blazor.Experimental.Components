@@ -46,28 +46,4 @@ public partial class PopupService : IPopupService
 
         return (string)res;
     }
-
-    /// <inheritdoc />
-    public Task MessageAsync(string message, AlertTypes type = AlertTypes.None)
-    {
-        _ = OpenAsync(typeof(Message), new Dictionary<string, object>()
-        {
-            { nameof(Message.Content), message },
-            { nameof(Message.Type), type }
-        });
-
-        return Task.CompletedTask;
-    }
-
-    /// <inheritdoc />
-    public Task MessageAsync(Exception ex)
-    {
-        _ = OpenAsync(typeof(Message), new Dictionary<string, object>()
-        {
-            { nameof(Message.Content), ex.Message },
-            { nameof(Message.Type), AlertTypes.Error }
-        });
-
-        return Task.CompletedTask;
-    }
 }

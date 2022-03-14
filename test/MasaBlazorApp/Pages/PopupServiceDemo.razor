@@ -1,5 +1,22 @@
 ﻿@page "/popup-service"
 
+<MRadioGroup @bind-Value="alertType">
+    <MRadio Value="AlertTypes.Success" Label="@nameof(AlertTypes.Success)"></MRadio>
+    <MRadio Value="AlertTypes.Warning" Label="@nameof(AlertTypes.Warning)"></MRadio>
+    <MRadio Value="AlertTypes.Error" Label="@nameof(AlertTypes.Error)"></MRadio>
+    <MRadio Value="AlertTypes.Info" Label="@nameof(AlertTypes.Info)"></MRadio>
+</MRadioGroup>
+
+<h2>Alert</h2>
+
+<MButton Class="text-capitalize"
+         Color="primary"
+         OnClick="ShowAlert">
+    Show Alert
+</MButton>
+
+<MDivider Class="my-2"></MDivider>
+
 <h2>Confirm</h2>
 
 <MButton Class="text-capitalize"
@@ -34,22 +51,29 @@
     [Inject]
     private IPopupService PopupService { get; set; }
 
+    private AlertTypes alertType = AlertTypes.Success;
+
+    private async Task ShowAlert()
+    {
+        await PopupService.AlertAsync("There is the content.", alertType);
+    }
+
     private async Task Confirm_OnOkAsync()
     {
         var confirmed = await PopupService.ConfirmAsync(
             "Title",
             "There is the content.",
-            AlertTypes.Success,
+            alertType,
             async e => await Task.Delay(2000)
             );
 
         if (confirmed)
         {
-            await PopupService.MessageAsync("Ok was clicked!", AlertTypes.Info);
+            await PopupService.AlertAsync("Ok was clicked!", AlertTypes.Info);
         }
         else
         {
-            await PopupService.MessageAsync("Cancel was clicked!", AlertTypes.Warning);
+            await PopupService.AlertAsync("Cancel was clicked!", AlertTypes.Warning);
         }
     }
 
@@ -58,6 +82,7 @@
         var confirmed = await PopupService.ConfirmAsync(
             "Title",
             "There is the content.",
+            alertType,
             async e =>
             {
                 try
@@ -68,17 +93,17 @@
                 catch (Exception ex)
                 {
                     e.Cancel = true;
-                    await PopupService.MessageAsync(ex);
+                    await PopupService.AlertAsync(ex);
                 }
             });
 
         if (confirmed)
         {
-            await PopupService.MessageAsync("Ok was clicked!", AlertTypes.Info);
+            await PopupService.AlertAsync("Ok was clicked!", AlertTypes.Info);
         }
         else
         {
-            await PopupService.MessageAsync("Cancel was clicked!", AlertTypes.Warning);
+            await PopupService.AlertAsync("Cancel was clicked!", AlertTypes.Warning);
         }
     }
 
@@ -88,17 +113,17 @@
 
         if (res == null)
         {
-            await PopupService.MessageAsync($"Cancel button was clicked!");
+            await PopupService.AlertAsync($"Cancel button was clicked!");
             return;
         }
 
         if (res != "Content")
         {
-            await PopupService.MessageAsync($"Input content('{res}') is not equal to 'Content'", AlertTypes.Error);
+            await PopupService.AlertAsync($"Input content('{res}') is not equal to 'Content'", AlertTypes.Error);
             return;
         }
 
-        await PopupService.MessageAsync($"Input content('{res}') is equal to 'Content'", AlertTypes.Success);
+        await PopupService.AlertAsync($"Input content('{res}') is equal to 'Content'", AlertTypes.Success);
     }
 
     private async Task Prompt_OnOkAsync()
@@ -115,7 +140,7 @@
                 else
                 {
                     // TODO: bug here, value in textarea would be clear!
-                    await PopupService.MessageAsync($"Input content('{e.Value}') is not equal to 'Content'", AlertTypes.Error);
+                    await PopupService.AlertAsync($"Input content('{e.Value}') is not equal to 'Content'", AlertTypes.Error);
                     e.Cancel = true;
                 }
             });

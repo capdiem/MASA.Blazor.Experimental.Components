@@ -16,6 +16,9 @@
     [Parameter]
     public Action<ConfirmParameters>? ConfirmParameters { get; set; }
 
+    [Parameter]
+    public Action<AlertParameters>? AlertParameters { get; set; }
+
     protected override void OnInitialized()
     {
         PopupProvider.StateChanged += OnStateChanged;

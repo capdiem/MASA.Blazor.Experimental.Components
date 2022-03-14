@@ -55,7 +55,8 @@
         </MContainer>
     </MMain>
 
-    <MasaPopupProvider ConfirmParameters="@DefaultConfirmParameters">
+    <MasaPopupProvider ConfirmParameters="@DefaultConfirmParameters"
+                       AlertParameters="DefaultAlertParameters">
     </MasaPopupProvider>
 </MApp>
 
@@ -68,6 +69,13 @@
         {
             ok.Text = false;
         };
+    };
+
+    static readonly Action<AlertParameters> DefaultAlertParameters = alert =>
+    {
+        alert.Light = false;
+        alert.Top = true;
+        alert.ActionText = "取消";
     };
 
 }
