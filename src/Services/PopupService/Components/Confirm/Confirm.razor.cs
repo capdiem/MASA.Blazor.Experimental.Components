@@ -75,7 +75,7 @@ public partial class Confirm : AlertingPopupComponentBase
         return SetResult(false);
     }
 
-    private async Task HandleOnSave()
+    private async Task HandleOnOk()
     {
         PopupOkEventArgs<bool> args = new(true);
 
