@@ -14,10 +14,13 @@
 @code {
 
     [Parameter]
-    public Action<ConfirmParameters>? ConfirmParameters { get; set; }
+    public Action<AlertParameters>? AlertParameters { get; set; }
 
     [Parameter]
-    public Action<AlertParameters>? AlertParameters { get; set; }
+    public Action<ConfirmParameters>? ConfirmParameters { get; set; }
+    
+    [Parameter]
+    public Action<PromptParameters>? PromptParameters { get; set; }
 
     protected override void OnInitialized()
     {

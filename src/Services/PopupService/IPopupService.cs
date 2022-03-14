@@ -22,9 +22,9 @@ public interface IPopupService
 
     Task<string> PromptAsync(string title, string content);
 
-    Task<string> PromptAsync(string title, string content, Action<PromptParameters> parameters);
+    Task<string> PromptAsync(string title, string content, Func<PopupOkEventArgs<string?>, Task> onOk);
 
-    Task<string> PromptAsync(string title, string content, Func<PopupOkEventArgs<string>, Task> onOk);
+    Task<string> PromptAsync(Action<PromptParameters> parameters);
 
     #endregion
 

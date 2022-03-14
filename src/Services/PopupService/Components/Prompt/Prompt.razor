@@ -1,5 +1,4 @@
-﻿@using System.ComponentModel.DataAnnotations
-@namespace Masa.Blazor.Experimental.Components
+﻿@namespace Masa.Blazor.Experimental.Components
 @inherits PopupComponentBase
 
 <MDialog Value="Visible"
@@ -7,95 +6,47 @@
          Persistent="true"
          @attributes="@Attributes">
     <MCard>
-        @if (Title != null)
+        @if (!string.IsNullOrEmpty(Title))
         {
-            <MCardTitle>@Title</MCardTitle>
+            <MCardTitle Class="@TitleClass" Style="@TitleStyle">
+                @Title
+            </MCardTitle>
         }
 
-        <MCardText Style="padding-bottom: 0">
-            @Content
-            <MForm Model="this" EnableDataAnnotationsValidation @ref="_form" OnSubmit="HandleOnSubmit">
-                <MTextarea @bind-Value="Value" Outlined Dense HideDetails="@("auto")" Placeholder="@Placeholder"></MTextarea>
+        <MCardText Class="@($"pb-0 {ContentClass}")" Style="@ContentStyle">
+            @if (!string.IsNullOrEmpty(Content))
+            {
+                @Content
+            }
+
+            <MForm @ref="_form"
+                   Class="pt-2"
+                   Model="_promptValue"
+                   EnableDataAnnotationsValidation
+                   OnSubmit="HandleOnSubmit">
+                <MTextarea @bind-Value="_promptValue.Value"
+                           AutoGrow
+                           Dense
+                           HideDetails="@("auto")"
+                           Outlined
+                           Placeholder="@Placeholder"
+                           Rows="1">
+                </MTextarea>
             </MForm>
         </MCardText>
 
-        <MCardActions>
-            <MSpacer/>
-            <MButton Disabled="_okLoading"
-                     OnClick="HandleOnCancel"
-                     Text>
-                取消
-            </MButton>
-            <MButton Color="primary"
-                     Loading="_okLoading"
-                     OnClick="HandleOnOk"
-                     Text>
-                确定
-            </MButton>
+        <MCardActions Class="@ActionsClass" Style="@($"justify-content:end; {ActionsStyle}")">
+            <ModalButton Props="ComputedCancelButtonProps"
+                         Disabled="_okLoading"
+                         OnClick="HandleOnCancel">
+                @CancelText
+            </ModalButton>
+            <ModalButton Props="ComputedOkButtonProps"
+                         Disabled="_okLoading"
+                         Loading="_okLoading"
+                         OnClick="HandleOnOk">
+                @OkText
+            </ModalButton>
         </MCardActions>
     </MCard>
 </MDialog>
-
-@code {
-
-    [Parameter]
-    public string? Content { get; set; }
-
-    [Parameter]
-    public Func<PopupOkEventArgs<string>, Task>? OnOk { get; set; }
-
-    [Parameter]
-    public string? Placeholder { get; set; }
-
-    [Parameter]
-    public string? Title { get; set; }
-
-    [Parameter]
-    [Required(ErrorMessage = "The value cannot be empty.")]
-    public string Value { get; set; }
-
-    private MForm _form;
-    private bool _okLoading;
-
-    private Task HandleOnCancel()
-    {
-        Visible = false;
-        return SetResult(null);
-    }
-
-    private async Task HandleOnSubmit()
-    {
-        PopupOkEventArgs<string> args = new(Value);
-
-        if (OnOk != null)
-        {
-            _okLoading = true;
-            await OnOk.Invoke(args);
-            _okLoading = false;
-        }
-
-        if (args.Cancel is null or false)
-        {
-            Visible = false;
-            await SetResult(Value);
-        }
-    }
-
-    private async Task HandleOnOk()
-    {
-        if (_form.EditContext.Validate())
-        {
-            await HandleOnSubmit();
-        }
-    }
-
-    private async Task SetResult(string value)
-    {
-        if (PopupItem != null)
-        {
-            await Task.Delay(256);
-            PopupItem.Discard(value);
-        }
-    }
-
-}
