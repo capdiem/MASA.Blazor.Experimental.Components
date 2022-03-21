@@ -30,6 +30,11 @@
                     <MListItemTitle>CopyableText</MListItemTitle>
                 </MListItemContent>
             </MListItem>
+            <MListItem Link Href="/ellipsis-text-component">
+                <MListItemContent>
+                    <MListItemTitle>EllipsisText</MListItemTitle>
+                </MListItemContent>
+            </MListItem>
             <MListItem Link Href="/datetime-picker-component">
                 <MListItemContent>
                     <MListItemTitle>DateTimePicker</MListItemTitle>
@@ -65,10 +70,7 @@
     static readonly Action<ConfirmParameters> DefaultConfirmParameters = confirm =>
     {
         confirm.TitleStyle = "font-weight: bold";
-        confirm.OkProps = ok =>
-        {
-            ok.Text = false;
-        };
+        confirm.OkProps = ok => { ok.Text = false; };
     };
 
     static readonly Action<AlertParameters> DefaultAlertParameters = alert =>

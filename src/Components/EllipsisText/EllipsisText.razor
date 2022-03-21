@@ -1,61 +1,32 @@
-﻿@using Microsoft.JSInterop
-@namespace Masa.Blazor.Experimental.Components
+﻿@namespace Masa.Blazor.Experimental.Components
 
-<MTooltip Disabled="IsDisabled" Top>
+<MTooltip Disabled="IsDisabled"
+          Bottom="Bottom"
+          Color="@TooltipColor"
+          ContentClass="@TooltipClass"
+          Left="Left"
+          Right="Right"
+          Top="Top"
+          NudgeBottom="NudgeBottom"
+          NudgeLeft="NudgeLeft"
+          NudgeRight="NudgeRight"
+          NudgeTop="NudgeTop">
     <ActivatorContent>
         <span class="d-inline-block text-truncate"
-              style="width: 100%"
-              @ref="ElementReference"
+              style="width: 100%; cursor: auto; vertical-align: top"
+              @ref="Ref"
               @attributes="@context.Attrs">
             @ChildContent
         </span>
     </ActivatorContent>
     <ChildContent>
-        @TooltipContent
+        @if (string.IsNullOrWhiteSpace(Tooltip))
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Tooltip
+        }
     </ChildContent>
 </MTooltip>
-
-@code
-{
-    [Inject]
-    private IJSRuntime Js { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public string Tooltip { get; set; }
-
-    private ElementReference ElementReference { get; set; }
-
-    private bool IsDisabled { get; set; }
-
-    private RenderFragment TooltipContent
-    {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(Tooltip))
-            {
-                return ChildContent;
-            }
-
-            return @<span>@Tooltip</span>;
-        }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if (firstRender)
-        {
-            IsDisabled = !(await IsEllipsis());
-            StateHasChanged();
-        }
-    }
-
-    private async Task<bool> IsEllipsis()
-    {
-        return await Js.InvokeAsync<bool>("MasaBlazorExperimental.isEllipsis", ElementReference);
-    }
-}

@@ -1,0 +1,37 @@
+﻿@page "/ellipsis-text-component"
+
+<div style=@($"width:{width}px")>
+    <EllipsisText Left="isLeft"
+                  Top="isTop"
+                  Right="isRight"
+                  Bottom="isBottom">
+        There is a text that can be ellipsis.
+    </EllipsisText>
+</div>
+
+<MRadioGroup @bind-Value="direction">
+    <MRadio Label="Left" Value="@("Left")"></MRadio>
+    <MRadio Label="Top" Value="@("Top")"></MRadio>
+    <MRadio Label="Right" Value="@("Right")"></MRadio>
+    <MRadio Label="Bottom" Value="@("Bottom")"></MRadio>
+</MRadioGroup>
+
+<MSlider @bind-Value="width"
+         Label="Width"
+         Max="300"
+         Min="100"
+         ThumbLabel="@("always")">
+</MSlider>
+
+@code {
+
+    double width = 100;
+
+    string direction;
+
+    bool isLeft => direction == "Left";
+    bool isTop => direction == "Top";
+    bool isRight => direction == "Right";
+    bool isBottom => direction == "Bottom";
+
+}
