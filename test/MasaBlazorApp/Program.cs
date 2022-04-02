@@ -4,8 +4,6 @@ builder.Services.AddMasaBlazor();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddMasaBlazorExperimentalComponents();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

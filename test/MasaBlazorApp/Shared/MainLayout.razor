@@ -20,16 +20,6 @@
                     <MListItemTitle>Actions</MListItemTitle>
                 </MListItemContent>
             </MListItem>
-            <MListItem Link Href="/block-text-component">
-                <MListItemContent>
-                    <MListItemTitle>BlockText</MListItemTitle>
-                </MListItemContent>
-            </MListItem>
-            <MListItem Link Href="/copyable-text-component">
-                <MListItemContent>
-                    <MListItemTitle>CopyableText</MListItemTitle>
-                </MListItemContent>
-            </MListItem>
             <MListItem Link Href="/ellipsis-text-component">
                 <MListItemContent>
                     <MListItemTitle>EllipsisText</MListItemTitle>
@@ -45,11 +35,6 @@
                     <MListItemTitle>Definitions</MListItemTitle>
                 </MListItemContent>
             </MListItem>
-            <MListItem Link Href="/popup-service">
-                <MListItemContent>
-                    <MListItemTitle>PopupService</MListItemTitle>
-                </MListItemContent>
-            </MListItem>
         </MList>
     </MNavigationDrawer>
     <MMain>
@@ -59,25 +44,4 @@
             </CascadingValue>
         </MContainer>
     </MMain>
-
-    <MasaPopupProvider ConfirmParameters="@DefaultConfirmParameters"
-                       AlertParameters="DefaultAlertParameters">
-    </MasaPopupProvider>
 </MApp>
-
-@code {
-
-    static readonly Action<ConfirmParameters> DefaultConfirmParameters = confirm =>
-    {
-        confirm.TitleStyle = "font-weight: bold";
-        confirm.OkProps = ok => { ok.Text = false; };
-    };
-
-    static readonly Action<AlertParameters> DefaultAlertParameters = alert =>
-    {
-        alert.Light = false;
-        alert.Top = true;
-        alert.ActionText = "取消";
-    };
-
-}
