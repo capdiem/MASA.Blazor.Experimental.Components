@@ -8,7 +8,7 @@
         {
             if (btn.ShowTooltip)
             {
-                <MTooltip Top>
+                <MTooltip @key="btn" Top>
                     <ActivatorContent>
                         @{
                             var attrs = context.Attrs
@@ -33,6 +33,7 @@
                 <MButton Color="@btn.Color"
                          Loading="btn.Loading"
                          OnClick="() => OnClickProxy(btn)"
+                         @key="btn"
                          @attributes="@btn.Attributes">
                     @btn.Label
                 </MButton>
@@ -49,7 +50,7 @@
                     <MList Dense MinWidth="80">
                         @foreach (var btn in MenuItems)
                         {
-                            <MListItem OnClick="() => OnClickProxy(btn)">
+                            <MListItem @key="btn" OnClick="() => OnClickProxy(btn)">
                                 <MListItemTitle>@btn.Label</MListItemTitle>
                             </MListItem>
                         }
