@@ -61,7 +61,7 @@ public partial class PDateTimePicker<TValue>
         await base.SetParametersAsync(parameters);
     }
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         DateTime? internalValue = null;
 
@@ -72,11 +72,6 @@ public partial class PDateTimePicker<TValue>
 
         InternalValue = internalValue ?? DefaultSelectedValue;
         
-        base.OnInitialized();
-    }
-
-    protected override void OnParametersSet()
-    {
         UpdateDisplay(InternalValue ?? DefaultSelectedValue);
 
         base.OnParametersSet();
