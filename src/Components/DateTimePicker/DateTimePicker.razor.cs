@@ -11,13 +11,6 @@ public partial class DateTimePicker<TValue>
 
     #endregion
 
-    [Parameter] public EventCallback<FocusEventArgs> OnHourFocus { get; set; }
-    [Parameter] public EventCallback<FocusEventArgs> OnHourBlur { get; set; }
-    [Parameter] public EventCallback<FocusEventArgs> OnMinuteFocus { get; set; }
-    [Parameter] public EventCallback<FocusEventArgs> OnMinuteBlur { get; set; }
-    [Parameter] public EventCallback<FocusEventArgs> OnSecondFocus { get; set; }
-    [Parameter] public EventCallback<FocusEventArgs> OnSecondBlur { get; set; }
-
     private static readonly int[] Hours = Enumerable.Range(0, 24).ToArray();
     private static readonly int[] Minutes = Enumerable.Range(0, 60).ToArray();
     private static readonly int[] Seconds = Enumerable.Range(0, 60).ToArray();

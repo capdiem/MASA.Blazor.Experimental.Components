@@ -3,7 +3,6 @@
 
 <MMenu @bind-Value="_menuValue"
        CloseOnContentClick="false"
-       CloseOnClick="@(!TimeFocused)"
        MinWidth="@("auto")"
        OffsetY>
     <ActivatorContent>
@@ -31,13 +30,7 @@
     <ChildContent>
         <DateTimePicker @bind-Value="DisplayValue"
                         TValue="DateTime?"
-                        NoTitle="NoTitle"
-                        OnHourBlur="OnHourBlur"
-                        OnHourFocus="OnHourFocus"
-                        OnMinuteBlur="OnMinuteBlur"
-                        OnMinuteFocus="OnMinuteFocus"
-                        OnSecondBlur="OnSecondBlur"
-                        OnSecondFocus="OnSecondFocus">
+                        NoTitle="NoTitle">
             <MButton Text Color="primary" OnClick="OnNow">此刻</MButton>
             <MSpacer></MSpacer>
             <MButton Text OnClick="HandleOnCancel">取消</MButton>

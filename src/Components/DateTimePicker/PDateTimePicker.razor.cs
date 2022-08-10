@@ -34,9 +34,6 @@ public partial class PDateTimePicker<TValue>
     [Parameter] public TimeSpan? TimeZoneOffset { get; set; }
 
     private bool _menuValue;
-    private bool _hourFocused;
-    private bool _minuteFocused;
-    private bool _secondFocused;
 
     private DateTime? InternalValue { get; set; }
 
@@ -51,8 +48,6 @@ public partial class PDateTimePicker<TValue>
             return offsetValue.HasValue ? offsetValue.Value.ToString(Format) : string.Empty;
         }
     }
-
-    private bool TimeFocused => _hourFocused || _minuteFocused || _secondFocused;
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
@@ -107,18 +102,6 @@ public partial class PDateTimePicker<TValue>
             await OnOk.InvokeAsync();
         }
     }
-
-    private void OnHourFocus() => _hourFocused = true;
-
-    private void OnHourBlur() => _hourFocused = false;
-
-    private void OnMinuteFocus() => _minuteFocused = true;
-
-    private void OnMinuteBlur() => _minuteFocused = false;
-
-    private void OnSecondFocus() => _secondFocused = true;
-
-    private void OnSecondBlur() => _secondFocused = false;
 
     private DateTime? OffsetValue(DateTime? utcTime, bool reverseOffset = false)
     {
