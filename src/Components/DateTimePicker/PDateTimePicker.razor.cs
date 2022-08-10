@@ -34,9 +34,6 @@ public partial class PDateTimePicker<TValue>
     [Parameter] public TimeSpan? TimeZoneOffset { get; set; }
 
     private bool _menuValue;
-    private bool _hourFocused;
-    private bool _minuteFocused;
-    private bool _secondFocused;
 
     private DateTime? InternalValue { get; set; }
 
@@ -52,8 +49,6 @@ public partial class PDateTimePicker<TValue>
         }
     }
 
-    private bool TimeFocused => _hourFocused || _minuteFocused || _secondFocused;
-
     public override async Task SetParametersAsync(ParameterView parameters)
     {
         PrependInnerIcon = "mdi-calendar";
@@ -61,7 +56,7 @@ public partial class PDateTimePicker<TValue>
         await base.SetParametersAsync(parameters);
     }
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         DateTime? internalValue = null;
 
@@ -72,11 +67,6 @@ public partial class PDateTimePicker<TValue>
 
         InternalValue = internalValue ?? DefaultSelectedValue;
         
-        base.OnInitialized();
-    }
-
-    protected override void OnParametersSet()
-    {
         UpdateDisplay(InternalValue ?? DefaultSelectedValue);
 
         base.OnParametersSet();
@@ -112,18 +102,6 @@ public partial class PDateTimePicker<TValue>
             await OnOk.InvokeAsync();
         }
     }
-
-    private void OnHourFocus() => _hourFocused = true;
-
-    private void OnHourBlur() => _hourFocused = false;
-
-    private void OnMinuteFocus() => _minuteFocused = true;
-
-    private void OnMinuteBlur() => _minuteFocused = false;
-
-    private void OnSecondFocus() => _secondFocused = true;
-
-    private void OnSecondBlur() => _secondFocused = false;
 
     private DateTime? OffsetValue(DateTime? utcTime, bool reverseOffset = false)
     {
