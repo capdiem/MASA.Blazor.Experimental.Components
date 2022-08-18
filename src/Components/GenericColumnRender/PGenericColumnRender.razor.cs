@@ -1,6 +1,6 @@
 ﻿namespace Masa.Blazor.Experimental.Components;
 
-public partial class GenericColumnRender
+public partial class PGenericColumnRender
 {
     [Parameter] public Func<bool, string>? BoolRender { get; set; }
 
