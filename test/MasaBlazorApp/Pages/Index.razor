@@ -1,1 +1,53 @@
 ﻿@page "/"
+
+<Dropdown Items="intervalList"
+          ItemKey="item => item.Text"
+          ItemText="item => item.Text"
+          @bind-Value="interval">
+    <PrependContent>
+        <MButton Icon Small>
+            <MIcon Small>mdi-refresh</MIcon>
+        </MButton>
+    </PrependContent>
+    <ActivatorContent>
+        @if (interval is not null && interval != "Off")
+        {
+            <span class="mr-1">@interval</span>
+        }
+        <MButton Icon Small @attributes="@context.Attrs">
+            <MIcon Small>mdi-menu-down</MIcon>
+        </MButton>
+    </ActivatorContent>
+</Dropdown>
+
+<DateTimeRangePicker></DateTimeRangePicker>
+
+<TimeSelector @bind-Value="time1"></TimeSelector>
+
+@time1.ToLongTimeString()
+
+<button @onclick="() => time1 = TimeOnly.FromDateTime(DateTime.Now)">tttttt</button>
+
+@code {
+
+    private TimeOnly time1;
+
+    private string interval;
+
+    private record IntervalItem(string Text, TimeSpan TimeSpan);
+
+    private List<IntervalItem> intervalList = new()
+    {
+        new IntervalItem("Off", TimeSpan.Zero),
+        new IntervalItem("10s", TimeSpan.FromSeconds(10)),
+        new IntervalItem("30s", TimeSpan.FromSeconds(30)),
+        new IntervalItem("1m", TimeSpan.FromMinutes(1)),
+        new IntervalItem("5m", TimeSpan.FromMinutes(5)),
+        new IntervalItem("15m", TimeSpan.FromMinutes(15)),
+        new IntervalItem("30m", TimeSpan.FromMinutes(30)),
+        new IntervalItem("1h", TimeSpan.FromHours(1)),
+        new IntervalItem("2h", TimeSpan.FromHours(2)),
+        new IntervalItem("1d", TimeSpan.FromDays(1)),
+    };
+
+}
