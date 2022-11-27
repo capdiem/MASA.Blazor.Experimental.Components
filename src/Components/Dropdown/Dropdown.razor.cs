@@ -1,6 +1,6 @@
 ﻿namespace Masa.Blazor.Experimental.Components;
 
-public partial class Dropdown<TItem>
+public partial class Dropdown<TItem, TValue>
 {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -8,42 +8,89 @@ public partial class Dropdown<TItem>
     [Parameter]
     public RenderFragment<ActivatorProps>? ActivatorContent { get; set; }
 
-    [Parameter]
-    public IEnumerable<TItem> Items { get; set; }
+    [Parameter, EditorRequired]
+    public List<TItem> Items { get; set; } = new();
 
     [Parameter, EditorRequired]
-    public Func<TItem, string> ItemKey { get; set; }
+    public Func<TItem, TValue> ItemValue { get; set; } = null!;
 
     [Parameter, EditorRequired]
-    public Func<TItem, string> ItemText { get; set; }
+    public Func<TItem, string> ItemText { get; set; } = null!;
 
     [Parameter]
-    public Func<TItem, string> ItemIcon { get; set; }
+    public Func<TItem, string>? ItemIcon { get; set; }
 
     [Parameter]
-    public RenderFragment<TItem> ItemContent { get; set; }
+    public RenderFragment<TItem>? ItemTemplate { get; set; }
 
     [Parameter]
-    public RenderFragment PrependContent { get; set; }
+    public RenderFragment? PrependContent { get; set; }
 
     [Parameter]
     public EventCallback<TItem> OnItemClick { get; set; }
 
     [Parameter]
-    public string Value { get; set; }
+    public TValue? Value { get; set; }
 
     [Parameter]
-    public EventCallback<string> ValueChanged { get; set; }
+    public EventCallback<TValue?> ValueChanged { get; set; }
 
-    private void ItemValueChanged(StringNumber val)
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; } = new();
+
+    private StringNumber _itemValue = 0;
+
+    public override async Task SetParametersAsync(ParameterView parameters)
     {
+        await base.SetParametersAsync(parameters);
+
+        ArgumentNullException.ThrowIfNull(Items);
+        ArgumentNullException.ThrowIfNull(ItemValue);
+        ArgumentNullException.ThrowIfNull(ItemText);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var defaultSelectedIndex = Items.FindIndex(item =>
+        {
+            var val = ItemValue.Invoke(item);
+            if (val == null && Value == null)
+            {
+                return true;
+            }
+
+            return val!.Equals(Value);
+        });
+        _itemValue = defaultSelectedIndex;
+    }
+
+    private async Task ItemValueChanged(StringNumber val)
+    {
+        _itemValue = val;
+
+        var index = val.ToInt32();
+
+        var item = Items.ElementAt(index);
+
+        var value = ItemValue.Invoke(item);
+
         if (ValueChanged.HasDelegate)
         {
-            _ = ValueChanged.InvokeAsync(val?.ToString());
+            await ValueChanged.InvokeAsync(value);
         }
         else
         {
-            Value = val?.ToString();
+            Value = value;
+        }
+    }
+
+    private async Task HandleOnItemClick(TItem item)
+    {
+        if (OnItemClick.HasDelegate)
+        {
+            await OnItemClick.InvokeAsync(item);
         }
     }
 }

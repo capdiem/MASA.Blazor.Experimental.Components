@@ -1,7 +1,8 @@
 ﻿@namespace Masa.Blazor.Experimental.Components
 @typeparam TItem
+@typeparam TValue
 
-<MMenu OffsetY NudgeBottom="8" Left NudgeRight="4">
+<MMenu OffsetY NudgeBottom="8" Left NudgeRight="4" @attributes="@Attributes">
     <ActivatorContent>
         <div class="d-inline-flex align-center">
             @if (PrependContent is not null)
@@ -22,11 +23,11 @@
     </ActivatorContent>
     <ChildContent>
         <MList Dense>
-            <MListItemGroup Value="@Value" ValueChanged="ItemValueChanged" Mandatory>
+            <MListItemGroup Value="@_itemValue" ValueChanged="ItemValueChanged" Mandatory>
                 @foreach (var item in Items)
                 {
-                    <MListItem Value="@ItemKey.Invoke(item)">
-                        @if (ItemContent is null)
+                    <MListItem OnClick="() => HandleOnItemClick(item)">
+                        @if (ItemTemplate is null)
                         {
                             @if (ItemIcon is not null)
                             {
@@ -40,7 +41,7 @@
                         }
                         else
                         {
-                            @ItemContent.Invoke(item)
+                            @ItemTemplate.Invoke(item)
                         }
                     </MListItem>
                 }

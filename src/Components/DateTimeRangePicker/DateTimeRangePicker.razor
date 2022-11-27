@@ -2,69 +2,57 @@
 @using System.Globalization
 @using System.Collections.ObjectModel
 
-<div class="d-flex align-center justify-end">
-    <MMenu Value="menuValue" ValueChanged="MenuValueChanged"
-           OffsetY NudgeBottom="8" OpenOnClick CloseOnContentClick="false"
-           ContentClass="px-6 py-4 white" ContentStyle="border-radius:16px">
-        <ActivatorContent>
-            <MSheet Class="d-flex rounded"
-                    Style="height:40px;border:1px solid rgba(0,0,0,.42);padding: 8px 12px;margin-right: 16px;"
-                    @attributes="@context.Attrs">
-                <div>@startDateTime.ToString(CultureInfo.CurrentUICulture)</div>
-                <MDivider Vertical Class="mx-2" />
-                <div>@endDateTime.ToString(CultureInfo.CurrentUICulture)</div>
-            </MSheet>
-        </ActivatorContent>
-        <ChildContent>
-            <div class="date-time-offset-picker__content mb-6 d-flex" style="width: 672px">
-                <MDatePicker Value="internalStartDate" ValueChanged="StartDateChanged" TValue="DateOnly"
-                             NoTitle FullWidth Class="mr-3 ml-n2"
-                             AllowedDates="val => val <= internalEndDate">
-                    <TimeSelector @bind-Value="@internalStartTime"></TimeSelector>
-                </MDatePicker>
-                <MDatePicker Value="internalEndDate" ValueChanged="EndDateChanged" TValue="DateOnly"
-                             NoTitle FullWidth Class="ml-3 mr-n2"
-                             AllowedDates="val => val >= internalStartDate">
-                    <TimeSelector @bind-Value="@internalEndTime"></TimeSelector>
-                </MDatePicker>
-            </div>
-            <div class="text-right mb-6">
-                <MSelect Value="Offset"
-                         ValueChanged="OffsetValueChanged"
-                         Items="tzc"
-                         ItemText='item => item.DisplayName'
-                         ItemValue="item => item.BaseUtcOffset"
-                         TValue="TimeSpan"
-                         TItem="TimeZoneInfo"
-                         TItemValue="TimeSpan"
-                         Dense
-                         Outlined
-                         HideDetails="true"
-                         Class="d-inline-block"
-                         Style="width:200px">
-                </MSelect>
-            </div>
-            <div class="text-right">
-                <MButton Color="primary" Outlined OnClick="() => menuValue = false">Cancel</MButton>
-                <MButton Color="primary" OnClick="OnConfirm">Confirm</MButton>
-            </div>
-        </ChildContent>
-    </MMenu>
-    <MSelect @bind-Value="relatedTimeSpan"
-             Items="RelatedItems"
-             ItemText="item => item.Text"
-             ItemValue="item => item.TimeSpan"
-             TItem="RelatedItem"
-             TValue="TimeSpan"
-             TItemValue="TimeSpan"
-             Dense
-             Outlined
-             HideDetails="true"
-             MenuProps="menu => { menu.OffsetY = true; menu.NudgeBottom = 8; }"
-             Style="flex:none;width:150px"
-             OnSelectedItemUpdate="OnRelatedTimeSpanSelected">
-    </MSelect>
-</div>
+<MMenu Value="menuValue" ValueChanged="MenuValueChanged"
+       OffsetY NudgeBottom="8" OpenOnClick CloseOnContentClick="false"
+       ContentClass="px-6 py-4 white" ContentStyle="border-radius:16px">
+    <ActivatorContent>
+        <div class="d-inline-flex align-center">
+            <MButton Text Small Class="d-flex align-center mr-1"
+                     Style="font-size: 14px;"
+                     @attributes="@context.Attrs">
+                <MIcon Size="20" Class="mr-2">mdi-calendar</MIcon>
+                <div>@FormatDateTime(startDateTime)</div>
+                <MDivider Vertical Class="mx-2" Style="align-self: auto; height: 14px;" />
+                <div>@FormatDateTime(endDateTime)</div>
+            </MButton>
+            <MChip Label Small Color="secondary">@Offset.Hours</MChip>
+        </div>
+    </ActivatorContent>
+    <ChildContent>
+        <div class="date-time-offset-picker__content mb-6 d-flex" style="width: 672px">
+            <MDatePicker Value="internalStartDate" ValueChanged="StartDateChanged" TValue="DateOnly"
+                         NoTitle FullWidth Class="mr-3 ml-n2"
+                         AllowedDates="val => val <= internalEndDate">
+                <TimeSelector @bind-Value="@internalStartTime"></TimeSelector>
+            </MDatePicker>
+            <MDatePicker Value="internalEndDate" ValueChanged="EndDateChanged" TValue="DateOnly"
+                         NoTitle FullWidth Class="ml-3 mr-n2"
+                         AllowedDates="val => val >= internalStartDate">
+                <TimeSelector @bind-Value="@internalEndTime"></TimeSelector>
+            </MDatePicker>
+        </div>
+        <div class="text-right mb-6">
+            <MSelect Value="Offset"
+                     ValueChanged="OffsetValueChanged"
+                     Items="tzc"
+                     ItemText='item => item.DisplayName'
+                     ItemValue="item => item.BaseUtcOffset"
+                     TValue="TimeSpan"
+                     TItem="TimeZoneInfo"
+                     TItemValue="TimeSpan"
+                     Dense
+                     Outlined
+                     HideDetails="true"
+                     Class="d-inline-block"
+                     Style="width:200px">
+            </MSelect>
+        </div>
+        <div class="text-right">
+            <MButton Color="primary" Outlined OnClick="() => menuValue = false">Cancel</MButton>
+            <MButton Color="primary" OnClick="OnConfirm">Confirm</MButton>
+        </div>
+    </ChildContent>
+</MMenu>
 
 @code {
 
@@ -76,22 +64,10 @@
 
     public static ReadOnlyCollection<TimeZoneInfo> tzc = TimeZoneInfo.GetSystemTimeZones();
 
-    private List<RelatedItem> RelatedItems = new()
-    {
-        new RelatedItem("last-5-min", TimeSpan.FromMinutes(-5)),
-        new RelatedItem("last-15-min", TimeSpan.FromMinutes(-15)),
-        new RelatedItem("last-30-min", TimeSpan.FromMinutes(-30)),
-        new RelatedItem("last-1-hours", TimeSpan.FromHours(-1)),
-        new RelatedItem("last-3-hours", TimeSpan.FromHours(-3)),
-        new RelatedItem("last-6-hours", TimeSpan.FromHours(-6)),
-        new RelatedItem("last-12-hours", TimeSpan.FromHours(-12)),
-        new RelatedItem("last-24-hours", TimeSpan.FromHours(-24)),
-        new RelatedItem("last-2-days", TimeSpan.FromDays(-2)),
-    };
-
     private bool menuValue;
 
     private TimeSpan relatedTimeSpan;
+
     private DateTimeOffset startDateTime;
     private DateTimeOffset endDateTime;
 
@@ -110,10 +86,8 @@
     private async Task OffsetValueChanged(TimeSpan offset)
     {
         Offset = offset;
-        if (OffsetChanged.HasDelegate)
-        {
-            await OffsetChanged.InvokeAsync(offset);
-        }
+        
+        // TODO: use internalOffset
     }
 
     private void StartDateChanged(DateOnly val)
@@ -137,11 +111,6 @@
         }
     }
 
-    private void OnRelatedTimeSpanSelected(RelatedItem item)
-    {
-        UpdateStartAndEndDateTime(item.TimeSpan);
-    }
-
     private void UpdateStartAndEndDateTime(TimeSpan timeSpan)
     {
         var now = DateTime.UtcNow;
@@ -163,13 +132,21 @@
         internalEndTime = TimeOnly.FromDateTime(val.DateTime);
     }
 
-    private void OnConfirm()
+    private async Task OnConfirm()
     {
+        if (OffsetChanged.HasDelegate)
+        {
+            await OffsetChanged.InvokeAsync(Offset);
+        }
+
         UpdateStartDateTime(new DateTimeOffset(internalStartDate.ToDateTime(internalStartTime), Offset));
         UpdateEndDateTime(new DateTimeOffset(internalEndDate.ToDateTime(internalEndTime), Offset));
         menuValue = false;
     }
 
-    private record RelatedItem(string Text, TimeSpan TimeSpan);
+    private string FormatDateTime(DateTimeOffset dateTimeOffset)
+    {
+        return dateTimeOffset.UtcDateTime.Add(Offset).ToString(CultureInfo.CurrentUICulture);
+    }
 
 }

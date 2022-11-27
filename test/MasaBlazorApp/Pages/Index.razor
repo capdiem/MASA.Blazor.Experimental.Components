@@ -1,38 +1,57 @@
 ﻿@page "/"
 
-<Dropdown Items="intervalList"
-          ItemKey="item => item.Text"
-          ItemText="item => item.Text"
-          @bind-Value="interval">
-    <PrependContent>
-        <MButton Icon Small>
-            <MIcon Small>mdi-refresh</MIcon>
-        </MButton>
-    </PrependContent>
-    <ActivatorContent>
-        @if (interval is not null && interval != "Off")
-        {
-            <span class="mr-1">@interval</span>
-        }
-        <MButton Icon Small @attributes="@context.Attrs">
-            <MIcon Small>mdi-menu-down</MIcon>
-        </MButton>
-    </ActivatorContent>
-</Dropdown>
+<di class="d-inline-flex align-center rounded px-4"
+    style="border:1px solid rgba(0,0,0,.38);height: 40px;">
+    <DateTimeRangePicker></DateTimeRangePicker>
 
-<DateTimeRangePicker></DateTimeRangePicker>
+    <MDivider Vertical Class="mx-2"></MDivider>
 
-<TimeSelector @bind-Value="time1"></TimeSelector>
-
-@time1.ToLongTimeString()
-
-<button @onclick="() => time1 = TimeOnly.FromDateTime(DateTime.Now)">tttttt</button>
+    <Dropdown @bind-Value="relatedTimeSpanText"
+              Items="RelatedItems"
+              ItemText="item => item.Text"
+              ItemValue="item => item.Text"
+              TItem="RelatedItem"
+              TValue="string"
+              OnItemClick="OnRelatedTimeSpanSelected"
+              OffsetY
+              NudgeBottom="@((StringNumber)8)">
+        <ActivatorContent>
+            <MButton Small @attributes="@context.Attrs" Text>
+                @relatedTimeSpanText
+                <MIcon Right>mdi-menu-down</MIcon>
+            </MButton>
+        </ActivatorContent>
+    </Dropdown>
+    <MDivider Vertical Class="mx-2" />
+    <Dropdown Items="intervalList"
+              ItemValue="item => item.Text"
+              ItemText="item => item.Text"
+              @bind-Value="interval">
+        <PrependContent>
+            <MButton Icon Small>
+                <MIcon Small>mdi-refresh</MIcon>
+            </MButton>
+        </PrependContent>
+        <ActivatorContent>
+            @{
+                var exists = interval is not null && interval != "Off";
+                <MButton Text Small Icon="!exists" @attributes="@context.Attrs">
+                    @if (exists)
+                    {
+                        <span class="mr-1">@interval</span>
+                    }
+                    <MIcon Small Right="@exists">mdi-menu-down</MIcon>
+                </MButton>
+            }
+        </ActivatorContent>
+    </Dropdown>
+</di>
 
 @code {
 
     private TimeOnly time1;
 
-    private string interval;
+    private string? interval = "10s";
 
     private record IntervalItem(string Text, TimeSpan TimeSpan);
 
@@ -49,5 +68,27 @@
         new IntervalItem("2h", TimeSpan.FromHours(2)),
         new IntervalItem("1d", TimeSpan.FromDays(1)),
     };
+
+    private string relatedTimeSpanText;
+
+    private List<RelatedItem> RelatedItems = new()
+    {
+        new RelatedItem("last-5-min", TimeSpan.FromMinutes(-5)),
+        new RelatedItem("last-15-min", TimeSpan.FromMinutes(-15)),
+        new RelatedItem("last-30-min", TimeSpan.FromMinutes(-30)),
+        new RelatedItem("last-1-hours", TimeSpan.FromHours(-1)),
+        new RelatedItem("last-3-hours", TimeSpan.FromHours(-3)),
+        new RelatedItem("last-6-hours", TimeSpan.FromHours(-6)),
+        new RelatedItem("last-12-hours", TimeSpan.FromHours(-12)),
+        new RelatedItem("last-24-hours", TimeSpan.FromHours(-24)),
+        new RelatedItem("last-2-days", TimeSpan.FromDays(-2)),
+    };
+
+    private record RelatedItem(string Text, TimeSpan TimeSpan);
+
+    private void OnRelatedTimeSpanSelected(RelatedItem item)
+    {
+    // UpdateStartAndEndDateTime(item.TimeSpan);
+    }
 
 }
