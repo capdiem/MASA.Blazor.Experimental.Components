@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>MASA.Blazor.Experimental.Components</PackageId>
-    <Version>0.6.7</Version>
+    <Version>0.7.0</Version>
     <PackageTags>blazor;masa.blazor;component</PackageTags>
     <Description>
       Experimental components about MASA.Blazor
@@ -18,7 +18,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <PackageReference Include="MASA.Blazor" Version="0.6.0-rc.7" />
+    <PackageReference Include="MASA.Blazor" Version="0.7.0-alpha.1409" />
     <PackageReference Include="Masa.Utils.Extensions.Enums" Version="0.5.0" />
   </ItemGroup>
 
